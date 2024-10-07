@@ -1,10 +1,14 @@
 using AssetTracker.Data;
+using AssetTracker.Interfaces;
+using AssetTracker.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
