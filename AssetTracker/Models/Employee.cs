@@ -15,5 +15,5 @@ public class Employee
     public string? Position { get; set; }
     [Required]
     public Workplace Workplace { get; set; }
-    ICollection<FixedAsset>? FixedAssets { get; set; }
+    public ICollection<FixedAsset>? FixedAssets { get; set; }
 }
