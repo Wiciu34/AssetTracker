@@ -15,5 +15,19 @@ namespace AssetTracker.Controllers
             var employees = await _employeeRepository.GetAllEmployeesAsync();
             return View(employees);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
+
+            if(employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+
+        }
+
     }
 }
