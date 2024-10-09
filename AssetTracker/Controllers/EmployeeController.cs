@@ -1,5 +1,6 @@
 ﻿using AssetTracker.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+//using System.Web.Mvc;
 
 namespace AssetTracker.Controllers
 {
@@ -10,10 +11,25 @@ namespace AssetTracker.Controllers
         {
             _employeeRepository = employeeRepository;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<JsonResult> GetEmployees()
         {
             var employees = await _employeeRepository.GetAllEmployeesAsync();
-            return View(employees);
+
+            var employeesModified = employees.Select(e => new
+            {
+                e.Id,
+                e.Name,
+                e.Surname,
+                e.Position,
+                Workplace = e.Workplace.ToString()
+            }).ToList();
+
+            return Json(new {data = employeesModified});
         }
 
         public async Task<IActionResult> Details(int id)
