@@ -1,6 +1,8 @@
-﻿using AssetTracker.Interfaces;
+﻿using AssetTracker.Data.Enum;
+using AssetTracker.Helpers;
+using AssetTracker.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-//using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AssetTracker.Controllers
 {
@@ -13,6 +15,7 @@ namespace AssetTracker.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.WorkplaceList = EnumHelper.GetSelectListItems<Workplace>();
             return View();
         }
 

@@ -16,15 +16,7 @@ $(function () {
             { "data": "name" },
             { "data": "surname" },
             { "data": "position" },
-            {
-                "data": "workplace",
-                //"render": function (data, type, row) {
-                //    if (data.workplace == 0) return "Warszawa";
-                //    else {
-                //        return "Lublin";
-                //    }
-                //}
-            },
+            { "data": "workplace"},
             {
                 "data": null,
                 "render": function (data, type, row) {
