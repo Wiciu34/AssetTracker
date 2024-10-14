@@ -15,7 +15,6 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Dodaj Pracownika</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="employeeAddForm">
                 <div class="modal-body">
                     <div class="form-outline mb-4">
                         <label for="Name" class="form-label">Imię</label>
@@ -23,7 +22,7 @@
                         <span class="text-danger" id="NameError"></span>
                     </div>
                     <div class="form-outline mb-4">
-                        <label for="Surname" class="form-label">Imię</label>
+                        <label for="Surname" class="form-label">Nazwisko</label>
                         <input type="text" id="Surname" class="form-control" />
                         <span class="text-danger" id="SurnameError"></span>
                     </div>
@@ -34,15 +33,14 @@
                     </div>
                     <div class="form-outline mb-4">
                         <label for="Workplace" class="form-label">Miejsce pracy</label>
-                        <select type="text" id="Workplace" asp-items="@ViewBag.WorkplaceList" class="form-control"></select>
+                        <select id="Workplace" name="Workplace" asp-items="@ViewBag.WorkplaceList" class="form-control"></select>
                         <span class="text-danger" id="WorkplaceError"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                    <button type="button" id="AddEmployeeBtn" class="btn btn-primary">Dodaj</button>
                 </div>
-            </form>
         </div>
     </div>
 </div>
@@ -70,3 +68,5 @@
     <tbody>
     </tbody>
 </table>
+
+<p>@ViewBag.WorkplaceList</p>
