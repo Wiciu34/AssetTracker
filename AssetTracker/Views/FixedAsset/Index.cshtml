@@ -1,0 +1,14 @@
+﻿@model IEnumerable<AssetTracker.Models.FixedAsset>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@{
+    foreach(var item in Model)
+    {
+        <p>@item.Model</p>
+    }
+}
+
