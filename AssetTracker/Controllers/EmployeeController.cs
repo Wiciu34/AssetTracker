@@ -89,8 +89,13 @@ namespace AssetTracker.Controllers
             );
 
             return Json(new { success = false, errors = errors });
+        }
 
-
+        [HttpPost]
+        public async Task<JsonResult> DeleteEmployee(int id)
+        {
+            await _employeeRepository.DeleteEmployeeAsync(id);
+            return Json(new { success = true });
         }
 
     }
