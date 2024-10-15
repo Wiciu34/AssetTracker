@@ -49,6 +49,15 @@ namespace AssetTracker.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetEmployee(int id)
+        {
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
+
+            return Json(new {data = employee});
+        }
+
+        [HttpPost]
         public async Task<JsonResult> CreateEmployee(Employee employee)
         {
             if(ModelState.IsValid)
@@ -63,6 +72,25 @@ namespace AssetTracker.Controllers
             );
 
             return Json(new {success = false, errors = errors});
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> EditEmployee(Employee employee)
+        {
+            if(ModelState.IsValid)
+            {
+                await _employeeRepository.UpdateEmployeeAsync(employee);
+                return Json(new { success = true, employee = employee });
+            }
+
+            var errors = ModelState.ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+            );
+
+            return Json(new { success = false, errors = errors });
+
+
         }
 
     }
