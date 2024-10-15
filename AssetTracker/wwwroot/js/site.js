@@ -6,6 +6,7 @@
 
 $(function () {
 
+    //Get all
     var table = $('#EmployeeTable').DataTable({
         "ajax": {
             "url": "/Employee/GetEmployees",
@@ -23,7 +24,7 @@ $(function () {
                     return `
                         <button class="btn btn-warning editEmployeeBtn" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"><i class="bi bi-pencil-square text-white"></i></button> 
                         <a class="btn btn-success" href="/Employee/Details/${data.id}"><i class="bi bi-person-square text-white"></i></a> 
-                        <button class="btn btn-danger deleteEmployeeBtn" data-id="${data.id}"><i class="bi bi-trash3 text-white"></i></button>
+                        <button class="btn btn-danger deleteEmployeeBtn" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal"><i class="bi bi-trash3 text-white"></i></button>
                     `;
                 }
             }
@@ -41,6 +42,7 @@ $(function () {
         }
     });
 
+    //Add
     $('#addEmployeeBtn').on("click", function () {
         clearModalFields();
         clearErrorMessages();
@@ -54,6 +56,7 @@ $(function () {
         submitEditOrCreate(method, message);
     });
 
+    //Edit
     $(document).on("click", ".editEmployeeBtn", function () {
         clearModalFields();
         clearErrorMessages();
@@ -63,25 +66,13 @@ $(function () {
         $('#modal-employee-title').html("Edytuj pracownika");
         $('#submit-btn').html("Zapisz zmiany");
 
-        $.ajax({
-            url: "/Employee/GetEmployee",
-            type: "GET",
-            data: {
-                "id": employeeId
-            },
-            success: function (response) {
-
-                $('#Name').val(response.data.name);
-                $('#Surname').val(response.data.surname);
-                $('#Position').val(response.data.position);
-                $('#Workplace').val(response.data.workplace);
-
-            },
-            error: function () {
-                alert("Wystąpił błąd")
-            }
-
-
+        getEmployee(employeeId).done(function (response) {
+            $('#Name').val(response.data.name);
+            $('#Surname').val(response.data.surname);
+            $('#Position').val(response.data.position);
+            $('#Workplace').val(response.data.workplace);
+        }).fail(function () {
+            alert("Wystąpił błąd podczas pobierania danych.");
         });
 
         var method = "EditEmployee";
@@ -89,6 +80,42 @@ $(function () {
 
         submitEditOrCreate(method, message, employeeId);
     });
+
+    //Delete
+    $(document).on("click", ".deleteEmployeeBtn", function () {
+
+        var employeeId = $(this).data("id");
+
+        getEmployee(employeeId).done(function (response) {
+            $('#employee-data').html(response.data.name + " " + response.data.surname);
+        }).fail(function () {
+            alert("Wystąpił błąd podczas pobierania danych.");
+        });
+
+        $('#submit-delete').on("click", function () {
+            $.ajax({
+                url: "/Employee/DeleteEmployee",
+                type: "POST",
+                data: { "id": employeeId },
+                success: function () {
+                    $('#deleteEmployeeModal').modal('hide');
+                    table.ajax.reload(null, false);
+                    alert("Pomyślnie usunięto pracownika");
+                },
+                error: function () {
+                    alert("Wystąpił błąd!");
+                }
+            })
+        });
+    });
+
+    function getEmployee(emplyeeId) {
+        return $.ajax({
+            url: "/Employee/GetEmployee",
+            type: "GET",
+            data: { "id": emplyeeId }
+        });
+    };
 
     function submitEditOrCreate(method, alertMessage, employeeId = null) {
         $('#AddOrEditForm').off('submit').on('submit', function (e) {
