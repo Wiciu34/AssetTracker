@@ -20,5 +20,13 @@ public class AppDbContext : DbContext
             .HasMany(a => a.FixedAssets)
             .WithOne(e => e.Employee)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<FixedAsset>()
+            .HasIndex(fa => fa.SerialNumber)
+            .IsUnique();
+
+        modelBuilder.Entity<FixedAsset>()
+            .HasIndex(fa => fa.AssetCode)
+            .IsUnique();
     }
 }

@@ -14,6 +14,6 @@ public class FixedAsset
     public string? SerialNumber { get; set; }
     [Required]
     public string? AssetCode { get; set; }
-    public int EmployeeId { get; set; }
+    public int? EmployeeId { get; set; }
     public Employee? Employee { get; set; }
 }
