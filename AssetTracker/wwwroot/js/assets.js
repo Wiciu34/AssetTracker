@@ -37,4 +37,88 @@ $(function () {
             "lengthMenu": "Wyświetl _MENU_ wierszy na stronę",
         }
     });
-})
+
+    //Add Asset
+    $('#addAssetBtn').on('click', function () {
+        clearModalFields();
+        clearErrorMessages();
+
+        $('#modal-asset-title').html("Dodaj zasób");
+        $('#submit-asset-btn').html("Dodaj");
+
+        var method = "CreateAsset";
+        var message = "Pomyślnie dodano zasób";
+
+        submitEditOrCreateAsset(method, message);
+    });
+
+    function submitEditOrCreateAsset(method, alertMessage, assetId = null) {
+        $('#AddOrEditAssetForm').off('submit').on('submit', function (e) {
+            e.preventDefault();
+
+            if (assetId == null) {
+                var formData = {
+                    "Name": $('#asset-name').val(),
+                    "Model": $('#asset-model').val(),
+                    "SerialNumber": $('#asset-serial-number').val(),
+                    "AssetCode": $('#asset-code').val(),
+                };
+            }
+            else {
+                var formData = {
+                    "Id": assetId,
+                    "Name": $('#asset-name').val(),
+                    "Model": $('#asset-model').val(),
+                    "SerialNumber": $('#asset-serial-number').val(),
+                    "AssetCode": $('#asset-code').val(),
+                };
+            }
+
+
+
+            $.ajax({
+                url: "/FixedAsset/" + method,
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        $('#addAssetModal').modal('hide');
+                        assetTable.ajax.reload(null, false);
+                        alert(alertMessage);
+                    }
+                    else {
+                        displayValidationErrors(response.errors);
+                    }
+                },
+                error: function () {
+                    alert("Wystąpił błąd podczas wysyłania danych.");
+                }
+            })
+        })
+    }
+
+    function displayValidationErrors(errors) {
+        clearErrorMessages();
+
+        for (var key in errors) {
+            if (errors.hasOwnProperty(key)) {
+                var errorId = key + "Error";
+                $("#" + errorId).html(errors[key].join('</br>'));
+            }
+        }
+    }
+
+    function clearErrorMessages() {
+        $('#NameError').html('');
+        $('#ModelError').html('');
+        $('#SerialNumberError').html('');
+        $('#AssetCodeError').html('');
+    }
+
+    function clearModalFields() {
+        $('#asset-name').val('');
+        $('#asset-model').val('');
+        $('#asset-serial-number').val('');
+        $('#asset-code').val('');
+    }
+});
