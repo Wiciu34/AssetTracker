@@ -71,7 +71,7 @@ $(function () {
             alert("Wystąpił błąd podczas pobierania danych.");
         });
 
-
+        submitEditOrCreateAsset("EditAsset", "Pomyślnie zmodyfikowano zasób", assetId);
     });
 
 

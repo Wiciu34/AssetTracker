@@ -82,4 +82,45 @@ public class FixedAssetController : Controller
 
         return Json(new {success = false, errors = errors});
     }
+
+    [HttpPost]
+    public async Task<JsonResult> EditAsset(FixedAsset asset)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                await _fixedAssetRepository.UpdateFixedAsset(asset);
+                return Json(new { success = true, asset = asset });
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException?.Message.Contains("IX_FixedAssets_SerialNumber") == true)
+                {
+                    ModelState.AddModelError("SerialNumber", "Numer seryjny jest już w użyciu.");
+                }
+
+                if (ex.InnerException?.Message.Contains("IX_FixedAssets_AssetCode") == true)
+                {
+                    ModelState.AddModelError("AssetCode", "Kod zasobu jest już w użyciu.");
+                }
+
+                if (!ex.InnerException.Message.Contains("IX_FixedAssets_SerialNumber") &&
+                !ex.InnerException.Message.Contains("IX_FixedAssets_AssetCode"))
+                {
+                    ModelState.AddModelError("", "Wystąpił błąd podczas zapisu danych.");
+                }
+            }
+        }
+
+        var errors = ModelState.ToDictionary(
+            kvp => kvp.Key,
+            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+        );
+
+        return Json(new { success = false, errors = errors });
+
+    }
+
+
 }
