@@ -3,12 +3,32 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Lista zasobów</h1>
 
-@{
-    foreach(var item in Model)
-    {
-        <p>@item.Model</p>
-    }
-}
+<table id="AssetTable" class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Nazwa
+            </th>
+            <th>
+                Model
+            </th>
+            <th>
+                Numer Seryjny
+            </th>
+            <th>
+                Kod Zasobu
+            </th>
+            <th>
+                Id Pracownika
+            </th>
+            <th>
+                Akcje
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 

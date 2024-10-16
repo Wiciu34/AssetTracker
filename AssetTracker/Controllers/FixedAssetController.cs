@@ -11,9 +11,15 @@ public class FixedAssetController : Controller
     {
         _fixedAssetRepository = fixedAssetRepository;
     }
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        var fixedAssets = await _fixedAssetRepository.GetAllAssetsAsync();
-        return View(fixedAssets);
+        return View();
+    }
+
+    public async Task<JsonResult> GetAssets()
+    {
+        var assets = await _fixedAssetRepository.GetAllAssetsAsync();
+
+        return Json(new {data = assets});
     }
 }
