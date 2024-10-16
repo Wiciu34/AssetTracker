@@ -62,4 +62,14 @@ public class FixedAssetRepository : IFixedAssetRepository
 
         throw new InvalidOperationException("Cannot find this asset");
     }
+
+    public async Task<bool> IsSerialNumberInUse(string serialNumber)
+    {
+        return await _context.FixedAssets.AnyAsync(a => a.SerialNumber == serialNumber);
+    }
+
+    public async Task<bool> IsAssetCodeInUse(string assetCode)
+    {
+        return await _context.FixedAssets.AnyAsync(a => a.AssetCode == assetCode);
+    }
 }

@@ -9,4 +9,6 @@ public interface IFixedAssetRepository
     Task CreateFixedAsset(FixedAsset fixedAsset);
     Task UpdateFixedAsset(FixedAsset fixedAsset);
     Task DeleteFixedAssetAsync(int id);
+    Task<bool> IsSerialNumberInUse(string serialNumber);
+    Task<bool> IsAssetCodeInUse(string assetCode);
 }
