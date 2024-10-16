@@ -22,4 +22,16 @@ public class FixedAssetController : Controller
 
         return Json(new {data = assets});
     }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var asset = await _fixedAssetRepository.GetAssetByIdAsync(id);
+
+        if (asset == null)
+        {
+            return NotFound();
+        }
+
+        return View(asset);
+    }
 }
