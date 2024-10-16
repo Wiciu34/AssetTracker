@@ -17,7 +17,7 @@ $(function () {
                 "data": null,
                 "render": function (data, type, row) {
                     return `
-                        <button class="btn btn-warning" data-id="${data.id}"><i class="bi bi-pencil-square text-white"></i></button> 
+                        <button class="btn btn-warning editAssetBtn" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#addAssetModal"><i class="bi bi-pencil-square text-white"></i></button> 
                         <a class="btn btn-success" href="/FixedAsset/Details/${data.id}"><i class="bi bi-person-square text-white"></i></a> 
                         <button class="btn btn-danger" data-id="${data.id}"><i class="bi bi-trash3 text-white"></i></button>
                     `;
@@ -51,6 +51,37 @@ $(function () {
 
         submitEditOrCreateAsset(method, message);
     });
+
+    //Update Asset
+    $(document).on('click', ".editAssetBtn", function () {
+        clearModalFields();
+        clearErrorMessages();
+
+        var assetId = $(this).data("id");
+
+        $('#modal-asset-title').html("Edytuj zasób");
+        $('#submit-asset-btn').html("Zapisz zmiany");
+
+        getAsset(assetId).done(function (response) {
+            $('#asset-name').val(response.data.name);
+            $('#asset-model').val(response.data.model);
+            $('#asset-serial-number').val(response.data.serialNumber);
+            $('#asset-code').val(response.data.assetCode);
+        }).fail(function () {
+            alert("Wystąpił błąd podczas pobierania danych.");
+        });
+
+
+    });
+
+
+    function getAsset(assetId) {
+        return $.ajax({
+            url: "/FixedAsset/GetAsset",
+            type: "GET",
+            data: { "id": assetId }
+        });
+    }
 
     function submitEditOrCreateAsset(method, alertMessage, assetId = null) {
         $('#AddOrEditAssetForm').off('submit').on('submit', function (e) {

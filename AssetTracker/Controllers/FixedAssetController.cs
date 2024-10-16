@@ -37,6 +37,14 @@ public class FixedAssetController : Controller
         return View(asset);
     }
 
+    [HttpGet]
+    public async Task<JsonResult> GetAsset(int id)
+    {
+        var asset = await _fixedAssetRepository.GetAssetByIdAsync(id);
+
+        return Json(new {data = asset});
+    }
+
     [HttpPost]
     public async Task<JsonResult> CreateAsset(FixedAsset asset)
     {
