@@ -1,5 +1,4 @@
-﻿
-$(function () {
+﻿$(function () {
     //Get All
     var assetTable = $('#AssetTable').DataTable({
         "ajax": {
@@ -19,7 +18,7 @@ $(function () {
                     return `
                         <button class="btn btn-warning editAssetBtn" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#addAssetModal"><i class="bi bi-pencil-square text-white"></i></button> 
                         <a class="btn btn-success" href="/FixedAsset/Details/${data.id}"><i class="bi bi-person-square text-white"></i></a> 
-                        <button class="btn btn-danger" data-id="${data.id}"><i class="bi bi-trash3 text-white"></i></button>
+                        <button class="btn btn-danger deleteAssetBtn" data-id="${data.id}"  data-bs-toggle="modal" data-bs-target="#deleteAssetModal"><i class="bi bi-trash3 text-white"></i></button>
                     `;
                 }
             },
@@ -74,6 +73,34 @@ $(function () {
         submitEditOrCreateAsset("EditAsset", "Pomyślnie zmodyfikowano zasób", assetId);
     });
 
+    //Delete Asset
+    $(document).on('click', ".deleteAssetBtn", function () {
+
+        var assetId = $(this).data("id");
+        console.log(assetId);
+        getAsset(assetId).done(function (response) {
+            $('#asset-data').html(response.data.assetCode);
+            console.log(response.data.assetCode);
+        }).fail(function () {
+            alert("Wystąpił błąd podczas pobierania danych.");
+        });
+
+        $('#submit-asset-delete').on("click", function () {
+            $.ajax({
+                url: "/FixedAsset/DeleteAsset",
+                type: "POST",
+                data: { "id": assetId },
+                success: function () {
+                    $('#deleteAssetModal').modal('hide');
+                    assetTable.ajax.reload(null, false);
+                    alert("Pomyślnie usunięto zasób");
+                },
+                error: function (response) {
+                    alert(response.error);
+                }
+            })
+        });
+    });
 
     function getAsset(assetId) {
         return $.ajax({

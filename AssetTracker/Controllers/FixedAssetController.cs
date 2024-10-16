@@ -122,5 +122,20 @@ public class FixedAssetController : Controller
 
     }
 
+    [HttpPost]
+    public async Task<JsonResult> DeleteAsset(int id)
+    {
+        try
+        {
+            await _fixedAssetRepository.DeleteFixedAssetAsync(id);
+            return Json(new { success = true });
+        }
+        catch(Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+        
+    }
+
 
 }

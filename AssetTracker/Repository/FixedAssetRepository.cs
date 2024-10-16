@@ -54,13 +54,13 @@ public class FixedAssetRepository : IFixedAssetRepository
     {
         var fixedAsset = await _context.FixedAssets.SingleOrDefaultAsync(fa => fa.Id == id);
 
-        if(fixedAsset != null)
+        if(fixedAsset == null)
         {
-            _context.FixedAssets.Remove(fixedAsset);
-            await _context.SaveChangesAsync();
+            throw new InvalidOperationException("Cannot find this asset");
         }
 
-        throw new InvalidOperationException("Cannot find this asset");
+        _context.FixedAssets.Remove(fixedAsset);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<bool> IsSerialNumberInUse(string serialNumber)
