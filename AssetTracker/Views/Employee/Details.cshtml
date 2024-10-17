@@ -40,3 +40,47 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<button type="button" id="addAssetToEmployeeBtn" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addAssetToEmployeeModal">Przydziel zasoby do pracownika</button>
+
+<div class="modal fade" id="addAssetToEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-employee-title" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Przydziel zasoby</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="AddAssetsToEmployeeForm">
+                <input type="hidden" id="employeeId" value="@Model.Id"/>
+                <div class="modal-body">
+                    <table id="addAssetToEmployeeTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nazwa
+                                </th>
+                                <th>
+                                    Model
+                                </th>
+                                <th>
+                                    Numer Seryjny
+                                </th>
+                                <th>
+                                    Kod Zasobu
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                    <button type="submit" id="submit-assets-to-employee-btn" class="btn btn-primary">Przydziel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -186,5 +186,56 @@ $(function () {
         $('#Position').val('');
         $('#Workplace').val('');
     }
+    ////////////////////////////////////////////////////////////////////
 
+    //Details page
+    var addAssetToEmployeeTable = $('#addAssetToEmployeeTable').DataTable({
+        "ajax": {
+            "url": "/FixedAsset/GetAssets",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            { "data": "name" },
+            { "data": "model" },
+            { "data": "serialNumber" },
+            { "data": "assetCode" },
+            { "data": "employeeId" },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return `
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="${data.id}">
+                        </div>
+                    `;           
+                    
+                },
+                
+            },
+        ],
+
+        "info": false,
+        "ordering": false,
+        "lengthChange": false,
+        "pageLength": 10,
+       
+
+        "language": {
+            "search": "Wyszukaj",
+        },
+    });
+
+    $('#AddAssetsToEmployeeForm').off('submit').on('submit', function (e) {
+        e.preventDefault();
+
+        let selectedIds = [];
+
+        $('#addAssetToEmployeeTable input.form-check-input:checked').each(function () {
+            selectedIds.push($(this).val());
+        });
+
+        console.log("Id pracownika: ", $('#employeeId').val());
+        console.log(selectedIds);
+    });
 });
