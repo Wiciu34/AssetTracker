@@ -235,7 +235,7 @@ $(function () {
             selectedIds.push($(this).val());
         });
 
-        console.log("Id pracownika: ", $('#employeeId').val());
-        console.log(selectedIds);
+
+        
     });
 });

@@ -45,6 +45,7 @@ namespace AssetTracker.Controllers
                 return NotFound();
             }
 
+            ViewBag.WorkplaceList = EnumHelper.GetSelectListItems<Workplace>();
             return View(employee);
 
         }
