@@ -19,7 +19,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Employee>()
             .HasMany(a => a.FixedAssets)
             .WithOne(e => e.Employee)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<FixedAsset>()
             .HasIndex(fa => fa.SerialNumber)
