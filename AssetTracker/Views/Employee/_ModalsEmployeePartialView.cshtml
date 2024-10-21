@@ -1,0 +1,56 @@
+﻿<div class="modal fade" id="addEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-employee-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modal-employee-title">Dodaj Pracownika</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="AddOrEditForm">
+                <div class="modal-body">
+                    <div class="form-outline mb-4">
+                        <label for="Name" class="form-label">Imię</label>
+                        <input type="text" id="Name" class="form-control" />
+                        <span class="text-danger" id="NameError"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label for="Surname" class="form-label">Nazwisko</label>
+                        <input type="text" id="Surname" class="form-control" />
+                        <span class="text-danger" id="SurnameError"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label for="Position" class="form-label">Stanowisko</label>
+                        <input type="text" id="Position" class="form-control" />
+                        <span class="text-danger" id="PositionError"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label for="Workplace" class="form-label">Miejsce pracy</label>
+                        <select id="Workplace" name="Workplace" asp-items="@ViewBag.WorkplaceList" class="form-control"></select>
+                        <span class="text-danger" id="WorkplaceError"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                    <button type="submit" id="submit-btn" class="btn btn-primary">Dodaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Usuń Pracownika</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Jesteś pewny że chcesz usunąć pracownika <span id="employee-data"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                <button type="button" class="btn btn-danger" id="submit-delete">Tak</button>
+            </div>
+        </div>
+    </div>
+</div>
