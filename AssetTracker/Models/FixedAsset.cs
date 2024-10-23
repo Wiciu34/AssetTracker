@@ -16,10 +16,11 @@ public class FixedAsset
     public string? AssetCode { get; set; }
     [DataType(DataType.DateTime)]
     [Required(ErrorMessage = "Data ważności jest wymagana!")]
-    DateTime? expirationDate { get; set; }
-    DateTime? AssignmentDate {  get; set; }
-    DateTime? returnDate { get; set; }
-    
+    public DateTime? expirationDate { get; set; }
+    [DataType(DataType.DateTime)]
+    public DateTime? AssignmentDate {  get; set; }
+    [DataType(DataType.DateTime)]
+    public DateTime? returnDate { get; set; }
     public int? EmployeeId { get; set; }
     public Employee? Employee { get; set; }
 }
