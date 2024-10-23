@@ -1,0 +1,48 @@
+﻿@model AssetTracker.Models.Employee
+
+<div class="row">
+    <div class="col-3">
+        <div class="card text-center p-2 shadow-lg rounded-3">
+            <img src="https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" class="card-img-top rounded-circle" alt="Alternate Text" />
+            <div class="card-body">
+                <h5 class="card-title">@Model?.Name @Model?.Surname</h5>
+                <button class="btn btn-warning editEmployeeBtn" data-id="@Model?.Id" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"><i class="bi bi-pencil-square text-white"></i></button>
+                <button class="btn btn-danger"><i class="bi bi-trash3 text-white"></i></button>
+                <button type="button" id="addAssetToEmployeeBtn" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addAssetToEmployeeModal">Przydziel zasoby do pracownika</button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body shadow-lg">
+                <h5 class="card-title mb-4">Dodatkowe Informacje</h5>
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        Imię:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Nazwisko:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Surname)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Stanowisko:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Position)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Miejsce pracy:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Workplace)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

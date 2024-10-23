@@ -52,6 +52,13 @@ namespace AssetTracker.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetEmployeePartialView(int id)
+        {
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
+            return PartialView("_EmployeePartialView", employee);
+        }
+
+        [HttpGet]
         public async Task<JsonResult> GetEmployee(int id)
         {
             var employee = await _employeeRepository.GetEmployeeByIdAsync(id);

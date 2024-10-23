@@ -121,6 +121,19 @@ $(function () {
         });
     };
 
+    function refreshEmployeePartialView(employeeId) {
+        $.ajax({
+            url: "/Employee/GetEmployeePartialView/" + employeeId,
+            type: "GET",
+            success: function (response) {
+                $('#employeeDetailsContainer').html(response);
+            },
+            error: function () {
+                alert("Wystąpił błąd podczas odświeżania widoku częściowego");
+            }
+        })
+    }
+
     function submitEditOrCreate(method, alertMessage, employeeId = null) {
         $('#AddOrEditForm').off('submit').on('submit', function (e) {
             e.preventDefault();
@@ -144,7 +157,13 @@ $(function () {
                 success: function (response) {
                     if (response.success) {
                         $('#addEmployeeModal').modal('hide');
-                        table.ajax.reload(null, false);
+                        if (window.location.pathname.includes("/Employee/Details/")) {
+                            refreshEmployeePartialView(employeeId);
+                        }
+                        else {
+                            table.ajax.reload(null, false);
+                        }
+
                         alert(alertMessage);
                     }
                     else {
