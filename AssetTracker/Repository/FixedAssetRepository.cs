@@ -72,4 +72,23 @@ public class FixedAssetRepository : IFixedAssetRepository
     {
         return await _context.FixedAssets.AnyAsync(a => a.AssetCode == assetCode);
     }
+
+    public async Task AddAssetsToEmployee(List<FixedAsset> assets, int employeeId)
+    {
+        var employee = await _context.Employees.SingleOrDefaultAsync(e => e.Id == employeeId);
+
+        if(employee == null)
+        {
+            throw new InvalidOperationException("Cannot find this employee");
+        }
+
+        foreach (FixedAsset asset in assets)
+        {
+            asset.EmployeeId = employee?.Id;
+            asset.Employee = employee;
+            employee?.FixedAssets?.Add(asset);
+        }
+
+        await _context.SaveChangesAsync();
+    }
 }

@@ -252,6 +252,30 @@ $(function () {
             selectedIds.push($(this).val());
         });
 
+        console.log(selectedIds);
+        console.log($('#employeeId').val());
+
+        $.ajax({
+            url: "/FixedAsset/AddAssetsToEmployee",
+            type: "POST",
+            data: {
+                assetsIds: selectedIds,
+                employeeId: $('#employeeId').val()
+                
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert("Pomyślnie dodano zasoby do pracownika");
+                    refreshEmployeePartialView(response.data)
+                }
+                else {
+                    alert("Nie udało się dodać zasobów do pracownika");
+                }
+            },
+            error: function () {
+                alert("Coś poszło nie tak!");
+            }
+        })
 
         
     });

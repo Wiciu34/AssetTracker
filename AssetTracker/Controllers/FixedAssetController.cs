@@ -77,7 +77,7 @@ public class FixedAssetController : Controller
 
         var errors = ModelState.ToDictionary(
             kvp => kvp.Key,
-            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+            kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
         );
 
         return Json(new {success = false, errors = errors});
@@ -115,7 +115,7 @@ public class FixedAssetController : Controller
 
         var errors = ModelState.ToDictionary(
             kvp => kvp.Key,
-            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+            kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
         );
 
         return Json(new { success = false, errors = errors });
@@ -137,5 +137,19 @@ public class FixedAssetController : Controller
         
     }
 
+    [HttpPost]
+    public async Task<JsonResult> AddAssetsToEmployee(List<int> assetsIds, int employeeId)
+    {
+        List<FixedAsset> assetsToAdd = new List<FixedAsset>();
 
+        foreach (int assetId in assetsIds)
+        {
+            var asset = await _fixedAssetRepository.GetAssetByIdAsync(assetId);
+            assetsToAdd.Add(asset);
+        }
+
+        await _fixedAssetRepository.AddAssetsToEmployee(assetsToAdd, employeeId);
+
+        return Json(new { success = true, data = employeeId});
+    }
 }

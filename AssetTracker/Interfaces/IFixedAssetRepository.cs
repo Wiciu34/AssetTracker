@@ -11,4 +11,5 @@ public interface IFixedAssetRepository
     Task DeleteFixedAssetAsync(int id);
     Task<bool> IsSerialNumberInUse(string serialNumber);
     Task<bool> IsAssetCodeInUse(string assetCode);
+    Task AddAssetsToEmployee(List<FixedAsset> assets, int employeeId);
 }
