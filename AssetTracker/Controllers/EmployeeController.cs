@@ -30,7 +30,8 @@ namespace AssetTracker.Controllers
                 e.Name,
                 e.Surname,
                 e.Position,
-                Workplace = e.Workplace.ToString()
+                Workplace = e.Workplace.ToString(),
+                e.Email
             }).ToList();
 
             return Json(new {data = employeesModified});

@@ -17,7 +17,8 @@ $(function () {
             { "data": "name" },
             { "data": "surname" },
             { "data": "position" },
-            { "data": "workplace"},
+            { "data": "workplace" },
+            { "data": "email" },
             {
                 "data": null,
                 "render": function (data, type, row) {
@@ -32,13 +33,14 @@ $(function () {
         ],
 
         "columnDefs": [
-            { "orderable": false, "target": 4 }
+            { "orderable": false, "target": [4,5] }
         ],
 
         "language": {
             "search": "Wyszukaj",
             "info": "Wyświetlanie _START_ do _END_ z _TOTAL_ wierszy",
             "lengthMenu": "Wyświetl _MENU_ wierszy na stronę",
+            "infoFiltered": "(przefiltrowano z _MAX_ wszystkich rekordów)",
         }
     });
 
@@ -71,6 +73,8 @@ $(function () {
             $('#Surname').val(response.data.surname);
             $('#Position').val(response.data.position);
             $('#Workplace').val(response.data.workplace);
+            $('#Email').val(response.data.email);
+
         }).fail(function () {
             alert("Wystąpił błąd podczas pobierania danych.");
         });
@@ -121,25 +125,17 @@ $(function () {
         $('#AddOrEditForm').off('submit').on('submit', function (e) {
             e.preventDefault();
 
-            if (employeeId == null) {
-                var formData = {
-                    "Name": $('#Name').val(),
-                    "Surname": $('#Surname').val(),
-                    "Position": $('#Position').val(),
-                    "Workplace": $('#Workplace').val(),
-                };
-            }
-            else {
-                var formData = {
-                    "Id": employeeId,
-                    "Name": $('#Name').val(),
-                    "Surname": $('#Surname').val(),
-                    "Position": $('#Position').val(),
-                    "Workplace": $('#Workplace').val(),
-                };
-            }
+            var formData = {
+                "Name": $('#Name').val(),
+                "Surname": $('#Surname').val(),
+                "Position": $('#Position').val(),
+                "Workplace": $('#Workplace').val(),
+                "Email": $('#Email').val()
+            };
 
-            
+            if (employeeId != null) {
+                formData["Id"] = employeeId
+            }
 
             $.ajax({
                 url: "/Employee/" + method,
@@ -178,6 +174,7 @@ $(function () {
         $('#SurnameError').html('');
         $('#PositionError').html('');
         $('#WorkplaceError').html('');
+        $('#EmailError').html('');
     }
 
     function clearModalFields() {
@@ -185,6 +182,7 @@ $(function () {
         $('#Surname').val('');
         $('#Position').val('');
         $('#Workplace').val('');
+        $('#Email').val('');
     }
     ////////////////////////////////////////////////////////////////////
 
