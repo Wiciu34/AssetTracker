@@ -145,6 +145,7 @@ public class FixedAssetController : Controller
         foreach (int assetId in assetsIds)
         {
             var asset = await _fixedAssetRepository.GetAssetByIdAsync(assetId);
+            asset.AssignmentDate = DateTime.UtcNow;
             assetsToAdd.Add(asset);
         }
 
