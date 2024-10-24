@@ -3,7 +3,7 @@
 
 
 // Write your JavaScript code.
-
+import "asset.js";
 $(function () {
 
     //Get all
@@ -252,9 +252,6 @@ $(function () {
             selectedIds.push($(this).val());
         });
 
-        console.log(selectedIds);
-        console.log($('#employeeId').val());
-
         $.ajax({
             url: "/FixedAsset/AddAssetsToEmployee",
             type: "POST",
@@ -276,7 +273,10 @@ $(function () {
                 alert("Coś poszło nie tak!");
             }
         })
+    });
 
-        
+    $(document).on("click", ".deleteAssetFromEmployee", function () {
+        let assetId = $(this).data("id");
+        console.log(assetId);
     });
 });

@@ -51,7 +51,9 @@
                     <h5 class="card-title">@item.Name</h5>
                     <h6 class="card-subtitle text-secondary mb-3">@item.Model</h6>
                     <a asp-controller="FixedAsset" asp-route-id="@item.Id" asp-action="Details" class="btn btn-success">Zobacz szczegóły</a>
-                    <div class="position-absolute top-0 end-0 mt-2 me-2"><i class="bi bi-x-lg"></i></div>
+                    <button class="btn position-absolute top-0 end-0 mt-2 me-2 deleteAssetFromEmployee" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#deleteAssetFromEmployeeModal">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
                     <div class="text-end">
                         @if (item.AssignmentDate.HasValue)
                         {

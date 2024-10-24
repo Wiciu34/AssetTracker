@@ -59,3 +59,21 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="deleteAssetFromEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Odbierz zasób</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Jesteś pewny że chcesz odebrać zasób: <span id="employee-asset-data"></span> od pracownika</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                <button type="button" class="btn btn-danger" id="submit-delete-asset-from-employee">Tak</button>
+            </div>
+        </div>
+    </div>
+</div>
