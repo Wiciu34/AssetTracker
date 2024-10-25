@@ -11,8 +11,9 @@ $(function () {
         "ajax": {
             "url": "/Employee/GetEmployees",
             "type": "GET",
-            "datatype": "json"
+            "datatype": "json",
         },
+
         "columns": [
             { "data": "name" },
             { "data": "surname" },
@@ -41,7 +42,13 @@ $(function () {
             "info": "Wyświetlanie _START_ do _END_ z _TOTAL_ wierszy",
             "lengthMenu": "Wyświetl _MENU_ wierszy na stronę",
             "infoFiltered": "(przefiltrowano z _MAX_ wszystkich rekordów)",
-        }
+
+            "loadingRecords": ` <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Ładowanie...</span>
+                                </div>
+                              `,
+            "emptyTable": "Brak danych do wyświetlenia",
+        },
     });
 
     //Add
