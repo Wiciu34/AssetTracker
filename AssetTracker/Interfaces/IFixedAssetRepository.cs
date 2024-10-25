@@ -12,4 +12,5 @@ public interface IFixedAssetRepository
     Task<bool> IsSerialNumberInUse(string serialNumber);
     Task<bool> IsAssetCodeInUse(string assetCode);
     Task AddAssetsToEmployee(List<FixedAsset> assets, int employeeId);
+    Task RemoveAssetFromEmployee(FixedAsset asset, int employeeId);
 }

@@ -1,4 +1,12 @@
-﻿$(function () {
+﻿function getAsset(assetId) {
+    return $.ajax({
+        url: "/FixedAsset/GetAsset",
+        type: "GET",
+        data: { "id": assetId }
+    });
+}
+
+$(function () {
     //Get All
     var assetTable = $('#AssetTable').DataTable({
         "ajax": {
@@ -101,14 +109,6 @@
             })
         });
     });
-
-    function getAsset(assetId) {
-        return $.ajax({
-            url: "/FixedAsset/GetAsset",
-            type: "GET",
-            data: { "id": assetId }
-        });
-    }
 
     function submitEditOrCreateAsset(method, alertMessage, assetId = null) {
         $('#AddOrEditAssetForm').off('submit').on('submit', function (e) {

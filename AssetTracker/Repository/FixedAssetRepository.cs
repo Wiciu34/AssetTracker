@@ -91,4 +91,21 @@ public class FixedAssetRepository : IFixedAssetRepository
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task RemoveAssetFromEmployee(FixedAsset asset, int employeeId)
+    {
+        var employee = await _context.Employees.SingleOrDefaultAsync(e => e.Id == employeeId);
+
+        if (employee == null)
+        {
+            throw new InvalidOperationException("Cannot find this employee");
+        }
+
+        asset.EmployeeId = null;
+        asset.Employee = null;
+
+        employee.FixedAssets?.Remove(asset);
+        
+        await _context.SaveChangesAsync();
+    }
 }

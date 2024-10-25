@@ -2,10 +2,10 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 
+//import { getAsset } from "./assets.js";
 // Write your JavaScript code.
-import "asset.js";
 $(function () {
-
+ 
     //Get all
     var table = $('#EmployeeTable').DataTable({
         "ajax": {
@@ -206,7 +206,7 @@ $(function () {
     ////////////////////////////////////////////////////////////////////
 
     //Details page
-    var addAssetToEmployeeTable = $('#addAssetToEmployeeTable').DataTable({
+    let addAssetToEmployeeTable = $('#addAssetToEmployeeTable').DataTable({
         "ajax": {
             "url": "/FixedAsset/GetAssets",
             "type": "GET",
@@ -262,8 +262,10 @@ $(function () {
             },
             success: function (response) {
                 if (response.success) {
+                    $("#addAssetToEmployeeModal").modal("hide");
                     alert("Pomyślnie dodano zasoby do pracownika");
-                    refreshEmployeePartialView(response.data)
+                    addAssetToEmployeeTable.ajax.reload(null, false);
+                    refreshEmployeePartialView(response.data);
                 }
                 else {
                     alert("Nie udało się dodać zasobów do pracownika");
@@ -276,7 +278,39 @@ $(function () {
     });
 
     $(document).on("click", ".deleteAssetFromEmployee", function () {
+
         let assetId = $(this).data("id");
-        console.log(assetId);
+        getAsset(assetId).done(function (response) {
+            $('#employee-asset-data').html(response.data.name + " " + response.data.model)
+        }).fail(function () {
+            alert("Wystąpił błąd podczas pobierania zasobu")
+        });
+
+        $("#submit-delete-asset-from-employee").on("click", function () {
+
+            $.ajax({
+                url: "/FixedAsset/RemoveAssetFromEmployee",
+                type: "POST",
+                data: {
+                    assetId: assetId,
+                    employeeId: $('#employeeId').val()
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $("#deleteAssetFromEmployeeModal").modal("hide");
+                        addAssetToEmployeeTable.ajax.reload(null, false);
+                        alert("Pomyślnie odebran zasób do pracownika");
+                        refreshEmployeePartialView(response.data);
+                    }
+                    else {
+                        alert("Nie udało się odebrać zasobu od pracownika");
+                    }
+                },
+                error: function () {
+                    alert("Coś poszło nie tak!");
+                }
+            })
+        });
+        
     });
 });

@@ -153,4 +153,17 @@ public class FixedAssetController : Controller
 
         return Json(new { success = true, data = employeeId});
     }
+
+    [HttpPost]
+    public async Task<JsonResult> RemoveAssetFromEmployee(int assetId, int employeeId)
+    {
+        var assetToRemove = await _fixedAssetRepository.GetAssetByIdAsync(assetId);
+
+        assetToRemove.returnDate = DateTime.UtcNow;
+        assetToRemove.AssignmentDate = null;
+
+        await _fixedAssetRepository.RemoveAssetFromEmployee(assetToRemove, employeeId);
+
+        return Json(new { success = true, data = employeeId });
+    }
 }
