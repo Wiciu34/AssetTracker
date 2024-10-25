@@ -13,11 +13,16 @@ public class FixedAssetRepository : IFixedAssetRepository
     {
         _context = context;
     }
-    public async Task<IEnumerable<FixedAsset>> GetAllAssetsAsync()
+    public async Task<IEnumerable<FixedAsset>> GetAllAssetsAsync(bool freeAssets = false)
     {
         if(_context.FixedAssets == null)
         {
             throw new InvalidOperationException("Entity set 'FixedAssets' is null");
+        }
+
+        if(freeAssets)
+        {
+           return await _context.FixedAssets.Where(fa => fa.EmployeeId == null).ToListAsync();
         }
 
         return await _context.FixedAssets.ToListAsync();

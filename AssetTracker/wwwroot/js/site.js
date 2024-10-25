@@ -206,18 +206,22 @@ $(function () {
     ////////////////////////////////////////////////////////////////////
 
     //Details page
+    let freeAssets = true
     let addAssetToEmployeeTable = $('#addAssetToEmployeeTable').DataTable({
+        
         "ajax": {
             "url": "/FixedAsset/GetAssets",
             "type": "GET",
-            "datatype": "json"
+            "datatype": "json",
+            "data": {
+                freeAssets: freeAssets
+            }
         },
         "columns": [
             { "data": "name" },
             { "data": "model" },
             { "data": "serialNumber" },
             { "data": "assetCode" },
-            { "data": "employeeId" },
             {
                 "data": null,
                 "render": function (data, type, row) {

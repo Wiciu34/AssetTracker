@@ -18,9 +18,9 @@ public class FixedAssetController : Controller
         return View();
     }
 
-    public async Task<JsonResult> GetAssets()
+    public async Task<JsonResult> GetAssets(bool freeAssets = false)
     {
-        var assets = await _fixedAssetRepository.GetAllAssetsAsync();
+        var assets = await _fixedAssetRepository.GetAllAssetsAsync(freeAssets);
 
         return Json(new {data = assets});
     }
