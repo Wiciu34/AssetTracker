@@ -20,14 +20,24 @@ public class EmployeeRepository : IEmployeeRepository
 
         return await _context.Employees.ToListAsync();
     }
-    public async Task<Employee> GetEmployeeByIdAsync(int id)
+    public async Task<Employee> GetEmployeeByIdAsync(int id, bool alone = false)
     {
         if (_context.Employees == null)
         {
             throw new InvalidOperationException("Entity set 'Employees' is null");
         }
 
-        var employee = await _context.Employees.Include(fa => fa.FixedAssets).SingleOrDefaultAsync(e => e.Id == id);
+        Employee? employee = null;
+
+        if (alone)
+        {
+            employee = await _context.Employees.SingleOrDefaultAsync(e => e.Id == id);
+        }
+        else
+        {
+            employee = await _context.Employees.Include(fa => fa.FixedAssets).SingleOrDefaultAsync(e => e.Id == id);
+        }
+
 
         if (employee == null)
         {
@@ -57,5 +67,4 @@ public class EmployeeRepository : IEmployeeRepository
             await _context.SaveChangesAsync();
         }
     }
-   
 }

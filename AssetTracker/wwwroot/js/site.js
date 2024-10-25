@@ -4,6 +4,10 @@
 
 //import { getAsset } from "./assets.js";
 // Write your JavaScript code.
+
+const toastMessage = $('.toast-body');
+const toastShow = bootstrap.Toast.getOrCreateInstance($('#Toast'));
+
 $(function () {
  
     //Get all
@@ -75,7 +79,7 @@ $(function () {
         $('#modal-employee-title').html("Edytuj pracownika");
         $('#submit-btn').html("Zapisz zmiany");
 
-        getEmployee(employeeId).done(function (response) {
+        getEmployee(employeeId, true).done(function (response) {
             $('#Name').val(response.data.name);
             $('#Surname').val(response.data.surname);
             $('#Position').val(response.data.position);
@@ -97,7 +101,7 @@ $(function () {
 
         var employeeId = $(this).data("id");
 
-        getEmployee(employeeId).done(function (response) {
+        getEmployee(employeeId, true).done(function (response) {
             $('#employee-data').html(response.data.name + " " + response.data.surname);
         }).fail(function () {
             alert("Wystąpił błąd podczas pobierania danych.");
@@ -117,7 +121,8 @@ $(function () {
                         table.ajax.reload(null, false);
                     }
 
-                    alert("Pomyślnie usunięto pracownika");
+                    toastMessage.html(alertMessage);
+                    toastShow.show();
                 },
                 error: function () {
                     alert("Wystąpił błąd!");
@@ -126,11 +131,14 @@ $(function () {
         });
     });
 
-    function getEmployee(emplyeeId) {
+    function getEmployee(emplyeeId, alone = false) {
         return $.ajax({
             url: "/Employee/GetEmployee",
             type: "GET",
-            data: { "id": emplyeeId }
+            data: {
+                "id": emplyeeId,
+                "alone": alone
+            }
         });
     };
 
@@ -176,8 +184,8 @@ $(function () {
                         else {
                             table.ajax.reload(null, false);
                         }
-
-                        alert(alertMessage);
+                        toastMessage.html(alertMessage);
+                        toastShow.show();
                     }
                     else {
                         displayValidationErrors(response.errors);
@@ -280,9 +288,10 @@ $(function () {
             success: function (response) {
                 if (response.success) {
                     $("#addAssetToEmployeeModal").modal("hide");
-                    alert("Pomyślnie dodano zasoby do pracownika");
                     addAssetToEmployeeTable.ajax.reload(null, false);
                     refreshEmployeePartialView(response.data);
+                    toastMessage.html("Pomyślnie dodano zasoby do pracownika");
+                    toastShow.show();
                 }
                 else {
                     alert("Nie udało się dodać zasobów do pracownika");
@@ -316,8 +325,9 @@ $(function () {
                     if (response.success) {
                         $("#deleteAssetFromEmployeeModal").modal("hide");
                         addAssetToEmployeeTable.ajax.reload(null, false);
-                        alert("Pomyślnie odebran zasób do pracownika");
                         refreshEmployeePartialView(response.data);
+                        toastMessage.html("Pomyślnie odebran zasób do pracownika");
+                        toastShow.show();
                     }
                     else {
                         alert("Nie udało się odebrać zasobu od pracownika");

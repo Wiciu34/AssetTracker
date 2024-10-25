@@ -59,9 +59,9 @@ namespace AssetTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetEmployee(int id)
+        public async Task<JsonResult> GetEmployee(int id, bool alone)
         {
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(id, alone);
 
             return Json(new {data = employee});
         }

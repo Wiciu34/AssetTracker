@@ -5,7 +5,7 @@ namespace AssetTracker.Interfaces;
 public interface IEmployeeRepository
 {
     Task<IEnumerable<Employee>> GetAllEmployeesAsync();
-    Task<Employee> GetEmployeeByIdAsync(int id);
+    Task<Employee> GetEmployeeByIdAsync(int id, bool alone = false);
     Task CreateEmployeeAsync(Employee employee);
     Task UpdateEmployeeAsync(Employee employee);
     Task DeleteEmployeeAsync(int id);
