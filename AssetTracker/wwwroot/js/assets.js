@@ -19,14 +19,19 @@ $(function () {
             { "data": "model" },
             { "data": "serialNumber" },
             { "data": "assetCode" },
-            { "data": "employeeId" },
+            {
+                "data": "employeeId",
+                "render": function (data, type, row) {
+                    return data != null ? "Zasób w użyciu" : "";
+                }
+            },
             {
                 "data": null,
                 "render": function (data, type, row) {
                     return `
                          <button class="btn btn-warning editAssetBtn" data-id="${data.id}" data-bs-toggle="modal" data-bs-target="#addAssetModal"><i class="bi bi-pencil-square text-white"></i></button> 
-                        <a class="btn btn-success" href="/FixedAsset/Details/${data.id}"><i class="bi bi-person-square text-white"></i></a> 
-                        <button class="btn btn-danger deleteAssetBtn" data-id="${data.id}"  data-bs-toggle="modal" data-bs-target="#deleteAssetModal"><i class="bi bi-trash3 text-white"></i></button>
+                         <a class="btn btn-success" href="/FixedAsset/Details/${data.id}"><i class="bi bi-person-square text-white"></i></a> 
+                         <button class="btn btn-danger deleteAssetBtn" data-id="${data.id}"  data-bs-toggle="modal" data-bs-target="#deleteAssetModal"><i class="bi bi-trash3 text-white"></i></button>
                     `;
                 }
             },
