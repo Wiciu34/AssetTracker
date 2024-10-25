@@ -103,7 +103,13 @@ $(function () {
                 data: { "id": employeeId },
                 success: function () {
                     $('#deleteEmployeeModal').modal('hide');
-                    table.ajax.reload(null, false);
+                    if (window.location.pathname.includes("/Employee/Details/")) {
+                        window.location.href = "/Employee/Index";
+                    }
+                    else {
+                        table.ajax.reload(null, false);
+                    }
+
                     alert("Pomyślnie usunięto pracownika");
                 },
                 error: function () {
