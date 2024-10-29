@@ -85,7 +85,6 @@ $(function () {
             $('#Position').val(response.data.position);
             $('#Workplace').val(response.data.workplace);
             $('#Email').val(response.data.email);
-
         }).fail(function () {
             alert("Wystąpił błąd podczas pobierania danych.");
         });
@@ -166,14 +165,17 @@ $(function () {
                 "Email": $('#Email').val()
             };
 
-            if (employeeId != null) {
-                formData["Id"] = employeeId
-            }
+            //if (employeeId != null) {
+            //    formData["Id"] = employeeId
+            //}
 
             $.ajax({
                 url: "/Employee/" + method,
                 type: "POST",
-                data: formData,
+                data: {
+                    "employeeDto": formData,
+                    "employeeId": employeeId
+                },
                 success: function (response) {
                     if (response.success) {
                         $('#addEmployeeModal').modal('hide');

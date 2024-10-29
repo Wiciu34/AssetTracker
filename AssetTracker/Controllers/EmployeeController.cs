@@ -1,4 +1,5 @@
 ﻿using AssetTracker.Data.Enum;
+using AssetTracker.DTOs.Employee;
 using AssetTracker.Helpers;
 using AssetTracker.Interfaces;
 using AssetTracker.Mappers;
@@ -61,34 +62,36 @@ namespace AssetTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> CreateEmployee(Employee employee)
+        public async Task<JsonResult> CreateEmployee(CreateUpdateEmployeeDto employeeDto)
         {
             if(ModelState.IsValid)
             {
+                var employee = employeeDto.ToEmployeeFromCreateUpdateDto();
                 await _employeeRepository.CreateEmployeeAsync(employee);
-                return Json(new { success = true, employee = employee });
+
+                return Json(new { success = true});
             }
 
             var errors = ModelState.ToDictionary(
                 kvp => kvp.Key,
-                kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
             );
 
             return Json(new {success = false, errors = errors});
         }
 
         [HttpPost]
-        public async Task<JsonResult> EditEmployee(Employee employee)
+        public async Task<JsonResult> EditEmployee(CreateUpdateEmployeeDto employeeDto, int employeeId)
         {
             if(ModelState.IsValid)
             {
-                await _employeeRepository.UpdateEmployeeAsync(employee);
-                return Json(new { success = true, employee = employee });
+                await _employeeRepository.UpdateEmployeeAsync(employeeDto, employeeId);
+                return Json(new { success = true});
             }
 
             var errors = ModelState.ToDictionary(
                 kvp => kvp.Key,
-                kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
             );
 
             return Json(new { success = false, errors = errors });

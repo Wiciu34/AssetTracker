@@ -1,4 +1,5 @@
 ﻿using AssetTracker.Data;
+using AssetTracker.DTOs.Employee;
 using AssetTracker.Interfaces;
 using AssetTracker.Models;
 using Microsoft.EntityFrameworkCore;
@@ -41,9 +42,21 @@ public class EmployeeRepository : IEmployeeRepository
         _context.Employees.Add(employee);
         await _context.SaveChangesAsync();  
     }
-    public async Task UpdateEmployeeAsync(Employee employee)
+    public async Task UpdateEmployeeAsync(CreateUpdateEmployeeDto employeeDto, int employeeId)
     {
-        _context.Employees.Update(employee);
+        var existingEmployee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == employeeId);
+
+        if (existingEmployee == null)
+        {
+            throw new InvalidOperationException("Employee does not exist");
+        }
+
+        existingEmployee.Name = employeeDto.Name;
+        existingEmployee.Surname = employeeDto.Surname;
+        existingEmployee.Position = employeeDto.Position;
+        existingEmployee.Workplace = employeeDto.Workplace;
+        existingEmployee.Email = employeeDto.Email;
+
         await _context.SaveChangesAsync();
     }
     public async Task DeleteEmployeeAsync(int id)

@@ -18,4 +18,16 @@ public static class EmployeeMappers
             FixedAssets = employee.FixedAssets?.Select(f => f.ToFixedAssetDto()).ToList(),
         };
     }
+
+    public static Employee ToEmployeeFromCreateUpdateDto(this CreateUpdateEmployeeDto employeeDto)
+    {
+        return new Employee
+        {
+            Name = employeeDto.Name,
+            Surname = employeeDto.Surname,
+            Position = employeeDto.Position,
+            Workplace = employeeDto.Workplace,
+            Email = employeeDto.Email,
+        };
+    }
 }
