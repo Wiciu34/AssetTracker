@@ -178,7 +178,9 @@ $(function () {
                 },
                 success: function (response) {
                     if (response.success) {
+
                         $('#addEmployeeModal').modal('hide');
+
                         if (window.location.pathname.includes("/Employee/Details/")) {
                             refreshEmployeePartialView(employeeId);
                         }
@@ -202,9 +204,10 @@ $(function () {
     function displayValidationErrors(errors) {
         clearErrorMessages();
 
-        for (var key in errors) {
+        for (let key in errors) {
             if (errors.hasOwnProperty(key)) {
-                var errorId = key + "Error";
+                let errorKey = key.replace('employeeDto.', '');
+                let errorId = errorKey + "Error";
                 $("#" + errorId).html(errors[key])
             }
         }
