@@ -13,7 +13,7 @@ public static class EmployeeMappers
             Name = employee.Name,
             Surname = employee.Surname,
             Position = employee.Position,
-            Workplace = employee.Workplace.ToString(),
+            Workplace = employee.Workplace,
             Email = employee.Email,
             FixedAssets = employee.FixedAssets?.Select(f => f.ToFixedAssetDto()).ToList(),
         };

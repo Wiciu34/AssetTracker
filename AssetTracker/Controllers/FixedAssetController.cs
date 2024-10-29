@@ -159,7 +159,7 @@ public class FixedAssetController : Controller
     {
         var assetToRemove = await _fixedAssetRepository.GetAssetByIdAsync(assetId);
 
-        assetToRemove.returnDate = DateTime.UtcNow;
+        assetToRemove.ReturnDate = DateTime.UtcNow;
         assetToRemove.AssignmentDate = null;
 
         await _fixedAssetRepository.RemoveAssetFromEmployee(assetToRemove, employeeId);

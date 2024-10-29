@@ -79,7 +79,7 @@ $(function () {
         $('#modal-employee-title').html("Edytuj pracownika");
         $('#submit-btn').html("Zapisz zmiany");
 
-        getEmployee(employeeId, true).done(function (response) {
+        getEmployee(employeeId).done(function (response) {
             $('#Name').val(response.data.name);
             $('#Surname').val(response.data.surname);
             $('#Position').val(response.data.position);
@@ -101,7 +101,7 @@ $(function () {
 
         var employeeId = $(this).data("id");
 
-        getEmployee(employeeId, true).done(function (response) {
+        getEmployee(employeeId).done(function (response) {
             $('#employee-data').html(response.data.name + " " + response.data.surname);
         }).fail(function () {
             alert("Wystąpił błąd podczas pobierania danych.");
@@ -131,13 +131,12 @@ $(function () {
         });
     });
 
-    function getEmployee(emplyeeId, alone = false) {
+    function getEmployee(emplyeeId) {
         return $.ajax({
             url: "/Employee/GetEmployee",
             type: "GET",
             data: {
                 "id": emplyeeId,
-                "alone": alone
             }
         });
     };

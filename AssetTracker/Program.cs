@@ -2,6 +2,7 @@ using AssetTracker.Data;
 using AssetTracker.Interfaces;
 using AssetTracker.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 

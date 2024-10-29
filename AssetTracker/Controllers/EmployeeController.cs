@@ -1,6 +1,7 @@
 ﻿using AssetTracker.Data.Enum;
 using AssetTracker.Helpers;
 using AssetTracker.Interfaces;
+using AssetTracker.Mappers;
 using AssetTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,17 +25,9 @@ namespace AssetTracker.Controllers
         {
             var employees = await _employeeRepository.GetAllEmployeesAsync();
 
-            var employeesModified = employees.Select(e => new
-            {
-                e.Id,
-                e.Name,
-                e.Surname,
-                e.Position,
-                Workplace = e.Workplace.ToString(),
-                e.Email
-            }).ToList();
+            var employeesDto = employees.Select(e => e.ToEmployeeDto()).ToList();
 
-            return Json(new {data = employeesModified});
+            return Json(new {data = employeesDto});
         }
 
         public async Task<IActionResult> Details(int id)
@@ -47,23 +40,24 @@ namespace AssetTracker.Controllers
             }
 
             ViewBag.WorkplaceList = EnumHelper.GetSelectListItems<Workplace>();
-            return View(employee);
 
+            return View(employee.ToEmployeeDto());
         }
 
         [HttpGet]
         public async Task<IActionResult> GetEmployeePartialView(int id)
         {
             var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
-            return PartialView("_EmployeePartialView", employee);
+
+            return PartialView("_EmployeePartialView", employee.ToEmployeeDto());
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetEmployee(int id, bool alone)
+        public async Task<JsonResult> GetEmployee(int id)
         {
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(id, alone);
+            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
 
-            return Json(new {data = employee});
+            return Json(new {data = employee.ToEmployeeDto()});
         }
 
         [HttpPost]
