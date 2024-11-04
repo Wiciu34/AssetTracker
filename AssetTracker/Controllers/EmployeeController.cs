@@ -3,9 +3,7 @@ using AssetTracker.DTOs.Employee;
 using AssetTracker.Helpers;
 using AssetTracker.Interfaces;
 using AssetTracker.Mappers;
-using AssetTracker.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AssetTracker.Controllers
 {

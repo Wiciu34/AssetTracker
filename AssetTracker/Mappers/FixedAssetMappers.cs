@@ -20,4 +20,16 @@ public static class FixedAssetMappers
             EmployeeId = fixedAsset.EmployeeId
         };
     }
+
+    public static FixedAsset FromCreateUpdateAssetDto(this CreateUpdateAssetDto assetDto)
+    {
+        return new FixedAsset
+        {
+            Name = assetDto.Name,
+            Model = assetDto.Model,
+            SerialNumber = assetDto.SerialNumber,
+            AssetCode = assetDto.AssetCode,
+            ExpirationDate = assetDto.ExpirationDate,
+        };
+    }
 }

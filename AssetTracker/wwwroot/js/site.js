@@ -165,10 +165,6 @@ $(function () {
                 "Email": $('#Email').val()
             };
 
-            //if (employeeId != null) {
-            //    formData["Id"] = employeeId
-            //}
-
             $.ajax({
                 url: "/Employee/" + method,
                 type: "POST",

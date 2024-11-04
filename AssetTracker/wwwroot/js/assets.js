@@ -93,7 +93,6 @@ $(function () {
         console.log(assetId);
         getAsset(assetId).done(function (response) {
             $('#asset-data').html(response.data.assetCode);
-            console.log(response.data.assetCode);
         }).fail(function () {
             alert("Wystąpił błąd podczas pobierania danych.");
         });

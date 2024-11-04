@@ -1,4 +1,5 @@
 ﻿using AssetTracker.Interfaces;
+using AssetTracker.Mappers;
 using AssetTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,9 @@ public class FixedAssetController : Controller
     {
         var assets = await _fixedAssetRepository.GetAllAssetsAsync(freeAssets);
 
-        return Json(new {data = assets});
+        var assetsDto = assets.Select(a => a.ToFixedAssetDto()).ToList();
+
+        return Json(new {data = assetsDto});
     }
 
     public async Task<IActionResult> Details(int id)
