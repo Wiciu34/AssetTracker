@@ -1,0 +1,60 @@
+﻿@* Add update asset modal *@
+
+<div class="modal fade" id="addAssetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-employee-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modal-asset-title">Dodaj Zasób</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="AddOrEditAssetForm">
+                <div class="modal-body">
+                    <div class="form-outline mb-4">
+                        <label for="asset-name" class="form-label">Nazwa</label>
+                        <input type="text" id="asset-name" class="form-control" />
+                        <span class="text-danger" id="NameError"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label for="asset-model" class="form-label">Model</label>
+                        <input type="text" id="asset-model" class="form-control" />
+                        <span class="text-danger" id="ModelError"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label for="asset-serial-number" class="form-label">Numer Seryjny</label>
+                        <input type="text" id="asset-serial-number" class="form-control" />
+                        <span class="text-danger" id="SerialNumberError"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label for="asset-code" class="form-label">Kod</label>
+                        <input type="text" id="asset-code" class="form-control" />
+                        <span class="text-danger" id="AssetCodeError"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+                    <button type="submit" id="submit-asset-btn" class="btn btn-primary">Dodaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Dlete asset modal *@
+
+<div class="modal fade" id="deleteAssetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Usuń Zasób</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Jesteś pewny że chcesz usunąć zasób o kodzie <span id="asset-data"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                <button type="button" class="btn btn-danger" id="submit-asset-delete">Tak</button>
+            </div>
+        </div>
+    </div>
+</div>

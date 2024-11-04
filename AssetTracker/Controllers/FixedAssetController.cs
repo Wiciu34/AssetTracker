@@ -37,7 +37,7 @@ public class FixedAssetController : Controller
             return NotFound();
         }
 
-        return View(asset);
+        return View(asset.ToFixedAssetDto());
     }
 
     [HttpGet]
@@ -45,7 +45,7 @@ public class FixedAssetController : Controller
     {
         var asset = await _fixedAssetRepository.GetAssetByIdAsync(id);
 
-        return Json(new {data = asset});
+        return Json(new {data = asset.ToFixedAssetDto()});
     }
 
     [HttpPost]

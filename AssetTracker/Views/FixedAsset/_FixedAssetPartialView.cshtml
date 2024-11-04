@@ -1,0 +1,66 @@
+﻿@model AssetTracker.DTOs.FixedAsset.FixedAssetDto
+
+<div class="card">
+    <div class="card-body shadow-lg">
+        <h5 class="card-title mb-4">Dodatkowe Informacje</h5>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Nazwa:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                Model:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+            <dt class="col-sm-2">
+                Numer Seryjny:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SerialNumber)
+            </dd>
+            <dt class="col-sm-2">
+                Kod zasobu:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AssetCode)
+            </dd>
+            <dt class="col-sm-2">
+                Data gwarancji:
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ExpirationDate)
+            </dd>
+            @if(Model.AssignmentDate == null)
+            {
+                <dt class="col-sm-2">
+                    Data oddania:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ReturnDate)
+                </dd>
+            }
+            else{
+                <dt class="col-sm-2">
+                    Data przyznania:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.AssignmentDate)
+                </dd>
+            }
+        </dl>
+        <div class="d-flex justify-content-start align-items-center">
+            <button class="btn btn-warning me-3 editAssetBtn" data-id="@Model?.Id" data-bs-toggle="modal" data-bs-target="#addAssetModal">
+                <i class="bi bi-pencil-square text-white"></i>
+            </button>
+            <button class="btn btn-danger deleteAssetBtn" data-id="@Model?.Id" data-bs-toggle="modal" data-bs-target="#deleteAssetModal">
+                <i class="bi bi-trash3 text-white"></i>
+            </button>
+        </div>
+
+    </div>
+
+</div>
