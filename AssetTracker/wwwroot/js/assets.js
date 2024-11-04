@@ -114,6 +114,19 @@ $(function () {
         });
     });
 
+    function refreshFixedAssetPartialView(assetId) {
+        $.ajax({
+            url: "/FixedAsset/GetAssetPartialView/" + assetId,
+            type: "GET",
+            success: function (response) {
+                $('#fixedAssetDetailsContainer').html(response);
+            },
+            error: function () {
+                alert("Wystąpił błąd podczas odświeżania widoku częściowego")
+            }
+        })
+    }
+
     function submitEditOrCreateAsset(method, alertMessage, assetId = null) {
         $('#AddOrEditAssetForm').off('submit').on('submit', function (e) {
             e.preventDefault();
@@ -175,6 +188,8 @@ $(function () {
         $('#ModelError').html('');
         $('#SerialNumberError').html('');
         $('#AssetCodeError').html('');
+        $('#ExpirationDateError').html('');
+
     }
 
     function clearModalFields() {
@@ -182,5 +197,6 @@ $(function () {
         $('#asset-model').val('');
         $('#asset-serial-number').val('');
         $('#asset-code').val('');
+        $('#asset-expiration-date').val('');
     }
 });

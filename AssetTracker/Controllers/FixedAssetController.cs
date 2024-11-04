@@ -41,6 +41,14 @@ public class FixedAssetController : Controller
     }
 
     [HttpGet]
+    public async Task<IActionResult> GetAssetPartialView(int id)
+    {
+        var asset = await _fixedAssetRepository.GetAssetByIdAsync(id);
+
+        return PartialView("_FixedAssetPartialView", asset.ToFixedAssetDto());
+    }
+
+    [HttpGet]
     public async Task<JsonResult> GetAsset(int id)
     {
         var asset = await _fixedAssetRepository.GetAssetByIdAsync(id);
