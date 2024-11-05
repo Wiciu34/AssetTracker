@@ -21,7 +21,7 @@ public static class FixedAssetMappers
         };
     }
 
-    public static FixedAsset FromCreateUpdateAssetDto(this CreateUpdateAssetDto assetDto)
+    public static FixedAsset FromCreateUpdateAsset(this CreateUpdateAssetDto assetDto)
     {
         return new FixedAsset
         {

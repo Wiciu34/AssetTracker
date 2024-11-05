@@ -131,25 +131,13 @@ $(function () {
         $('#AddOrEditAssetForm').off('submit').on('submit', function (e) {
             e.preventDefault();
 
-            if (assetId == null) {
-                var formData = {
-                    "Name": $('#asset-name').val(),
-                    "Model": $('#asset-model').val(),
-                    "SerialNumber": $('#asset-serial-number').val(),
-                    "AssetCode": $('#asset-code').val(),
-                };
-            }
-            else {
-                var formData = {
-                    "Id": assetId,
-                    "Name": $('#asset-name').val(),
-                    "Model": $('#asset-model').val(),
-                    "SerialNumber": $('#asset-serial-number').val(),
-                    "AssetCode": $('#asset-code').val(),
-                };
-            }
-
-
+            var formData = {
+                "Name": $('#asset-name').val(),
+                "Model": $('#asset-model').val(),
+                "SerialNumber": $('#asset-serial-number').val(),
+                "AssetCode": $('#asset-code').val(),
+                "ExpirationDate": $('#asset-expiration-date').val()
+            };
 
             $.ajax({
                 url: "/FixedAsset/" + method,
@@ -175,10 +163,11 @@ $(function () {
     function displayValidationErrors(errors) {
         clearErrorMessages();
 
-        for (var key in errors) {
+        for (let key in errors) {
             if (errors.hasOwnProperty(key)) {
-                var errorId = key + "Error";
-                $("#" + errorId).html(errors[key].join('</br>'));
+                let errorKey = key.replace('assetDto', '');
+                let errorId = errorKey + "Error";
+                $("#" + errorId).html(errors[key]);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using AssetTracker.Interfaces;
+﻿using AssetTracker.DTOs.FixedAsset;
+using AssetTracker.Interfaces;
 using AssetTracker.Mappers;
 using AssetTracker.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -57,14 +58,15 @@ public class FixedAssetController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> CreateAsset(FixedAsset asset)
+    public async Task<JsonResult> CreateAsset(CreateUpdateAssetDto assetDto)
     {
         if (ModelState.IsValid)
         {
             try
             {
+                var asset = assetDto.FromCreateUpdateAsset();
                 await _fixedAssetRepository.CreateFixedAsset(asset);
-                return Json(new { success = true, asset = asset });
+                return Json(new { success = true});
             }
             catch(DbUpdateException ex)
             {
