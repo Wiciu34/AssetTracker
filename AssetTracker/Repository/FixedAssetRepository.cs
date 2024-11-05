@@ -1,4 +1,5 @@
 ﻿using AssetTracker.Data;
+using AssetTracker.DTOs.FixedAsset;
 using AssetTracker.Interfaces;
 using AssetTracker.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -49,9 +50,21 @@ public class FixedAssetRepository : IFixedAssetRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateFixedAsset(FixedAsset fixedAsset)
+    public async Task UpdateFixedAsset(CreateUpdateAssetDto fixedAssetDto, int assetId)
     {
-        _context.FixedAssets.Update(fixedAsset);
+        var existingAsset = await _context.FixedAssets.FirstOrDefaultAsync(fa => fa.Id == assetId);
+
+        if (existingAsset == null)
+        {
+            throw new InvalidOperationException("Asset does not exsit");
+        }
+
+        existingAsset.Name = fixedAssetDto.Name;
+        existingAsset.Model = fixedAssetDto.Model;
+        existingAsset.SerialNumber = fixedAssetDto.SerialNumber;
+        existingAsset.AssetCode = fixedAssetDto.AssetCode;
+        existingAsset.ExpirationDate = fixedAssetDto.ExpirationDate;
+        
         await _context.SaveChangesAsync();
     }
 

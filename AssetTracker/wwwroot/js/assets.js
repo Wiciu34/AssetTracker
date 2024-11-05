@@ -75,10 +75,16 @@ $(function () {
         $('#submit-asset-btn').html("Zapisz zmiany");
 
         getAsset(assetId).done(function (response) {
+
+            let dateObj = new Date(response.data.expirationDate)
+            dateObj.setDate(dateObj.getDate() + 1);
+
             $('#asset-name').val(response.data.name);
             $('#asset-model').val(response.data.model);
             $('#asset-serial-number').val(response.data.serialNumber);
             $('#asset-code').val(response.data.assetCode);
+            $('#asset-expiration-date').val(dateObj.toISOString().split('T')[0]);
+            
         }).fail(function () {
             alert("Wystąpił błąd podczas pobierania danych.");
         });
@@ -90,7 +96,7 @@ $(function () {
     $(document).on('click', ".deleteAssetBtn", function () {
 
         var assetId = $(this).data("id");
-        console.log(assetId);
+
         getAsset(assetId).done(function (response) {
             $('#asset-data').html(response.data.assetCode);
         }).fail(function () {
@@ -104,7 +110,12 @@ $(function () {
                 data: { "id": assetId },
                 success: function () {
                     $('#deleteAssetModal').modal('hide');
-                    assetTable.ajax.reload(null, false);
+                    if (window.location.pathname.includes("/FixedAsset/Details/")) {
+                        window.location.href = "/FixedAsset/Index";
+                    }
+                    else {
+                        assetTable.ajax.reload(null, false);
+                    }
                     alert("Pomyślnie usunięto zasób");
                 },
                 error: function (response) {
@@ -142,11 +153,21 @@ $(function () {
             $.ajax({
                 url: "/FixedAsset/" + method,
                 type: "POST",
-                data: formData,
+                data: {
+                    "assetDto": formData,
+                    "assetId": assetId
+                },
                 success: function (response) {
                     if (response.success) {
+
                         $('#addAssetModal').modal('hide');
-                        assetTable.ajax.reload(null, false);
+
+                        if (window.location.pathname.includes("/FixedAsset/Details/")) {
+                            refreshFixedAssetPartialView(assetId);
+                        }
+                        else {
+                            assetTable.ajax.reload(null, false);
+                        }
                         alert(alertMessage);
                     }
                     else {
@@ -165,7 +186,7 @@ $(function () {
 
         for (let key in errors) {
             if (errors.hasOwnProperty(key)) {
-                let errorKey = key.replace('assetDto', '');
+                let errorKey = key.replace('assetDto.', '');
                 let errorId = errorKey + "Error";
                 $("#" + errorId).html(errors[key]);
             }

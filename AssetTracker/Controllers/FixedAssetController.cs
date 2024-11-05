@@ -97,14 +97,14 @@ public class FixedAssetController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> EditAsset(FixedAsset asset)
+    public async Task<JsonResult> EditAsset(CreateUpdateAssetDto assetDto, int assetId)
     {
         if (ModelState.IsValid)
         {
             try
             {
-                await _fixedAssetRepository.UpdateFixedAsset(asset);
-                return Json(new { success = true, asset = asset });
+                await _fixedAssetRepository.UpdateFixedAsset(assetDto, assetId);
+                return Json(new { success = true });
             }
             catch (DbUpdateException ex)
             {
