@@ -38,15 +38,25 @@ $(function () {
         ],
 
         "columnDefs": [
-            { "orderable": false, "target": 4 },
-            { "orderable": false, "target": 5 },
+            { "orderable": false, "target": [4,5] },
             { "searchable": false, "targets": 4 }
         ],
+
+        "responsive": true,
 
         "language": {
             "search": "Wyszukaj",
             "info": "Wyświetlanie _START_ do _END_ z _TOTAL_ wierszy",
             "lengthMenu": "Wyświetl _MENU_ wierszy na stronę",
+            "infoFiltered": "(przefiltrowano z _MAX_ wszystkich rekordów)",
+
+            "loadingRecords": ` <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Ładowanie...</span>
+                                </div>
+                              `,
+            "emptyTable": "Brak danych do wyświetlenia",
+            "zeroRecords": "Brak wyników spełniających kryteria wyszukiwania",
+            "infoEmpty": "Brak wyników do wyświetlenia",
         }
     });
 
@@ -116,10 +126,10 @@ $(function () {
                     else {
                         assetTable.ajax.reload(null, false);
                     }
-                    alert("Pomyślnie usunięto zasób");
+                    toast.show("Pomyślnie usunięto zasób");
                 },
                 error: function (response) {
-                    alert(response.error);
+                    toast.show(response.error, "error");
                 }
             })
         });
@@ -168,7 +178,7 @@ $(function () {
                         else {
                             assetTable.ajax.reload(null, false);
                         }
-                        alert(alertMessage);
+                        toast.show(alertMessage);
                     }
                     else {
                         displayValidationErrors(response.errors);

@@ -1,15 +1,44 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿class Toast {
+    constructor() {
+        if (!document.getElementById('toast-container')) {
+            const container = document.createElement('div');
+            container.id = 'toast-container';
+            container.classList.add('toast-container', 'position-fixed', 'top-0', 'end-0', 'p-3');
+            container.style.zIndex = '1100';
+            document.body.appendChild(container);
+        }
+    }
 
 
-//import { getAsset } from "./assets.js";
-// Write your JavaScript code.
+    show(message, type = 'success', duration = 3000) {
+        const toast = document.createElement('div');
+        toast.classList.add('toast', 'align-items-center', 'border-0', `bg-${type}`, 'text-white');
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertLive');
+        toast.setAttribute('aria-atomic', 'true');
 
-const toastMessage = $('.toast-body');
-const toastShow = bootstrap.Toast.getOrCreateInstance($('#Toast'));
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        `;
+
+        document.getElementById('toast-container').appendChild(toast);
+
+        const bootstrapToast = new bootstrap.Toast(toast, { delay: duration });
+        bootstrapToast.show();
+
+        toast.addEventListener('hidden.bs.toast', () => toast.remove());
+    }
+}
+
+const toast = new Toast();
 
 $(function () {
- 
+    
     //Get all
     var table = $('#EmployeeTable').DataTable({
         "ajax": {
@@ -41,6 +70,8 @@ $(function () {
             { "orderable": false, "target": [4,5] }
         ],
 
+        "responsive": true,
+
         "language": {
             "search": "Wyszukaj",
             "info": "Wyświetlanie _START_ do _END_ z _TOTAL_ wierszy",
@@ -52,6 +83,8 @@ $(function () {
                                 </div>
                               `,
             "emptyTable": "Brak danych do wyświetlenia",
+            "zeroRecords": "Brak wyników spełniających kryteria wyszukiwania",
+            "infoEmpty": "Brak wyników do wyświetlenia",
         },
     });
 
@@ -119,12 +152,10 @@ $(function () {
                     else {
                         table.ajax.reload(null, false);
                     }
-
-                    toastMessage.html(alertMessage);
-                    toastShow.show();
+                    toast.show(alertMessage)
                 },
                 error: function () {
-                    alert("Wystąpił błąd!");
+                    toast.show("Wystąpił błąd podczas usuwania", "danger")
                 }
             })
         });
@@ -183,8 +214,7 @@ $(function () {
                         else {
                             table.ajax.reload(null, false);
                         }
-                        toastMessage.html(alertMessage);
-                        toastShow.show();
+                        toast.show(alertMessage)
                     }
                     else {
                         displayValidationErrors(response.errors);
@@ -262,9 +292,11 @@ $(function () {
         "lengthChange": false,
         "pageLength": 10,
        
+        "responsive": true,
 
         "language": {
             "search": "Wyszukaj",
+            "zeroRecords": "Brak wyników spełniających kryteria wyszukiwania"
         },
     });
 
@@ -290,15 +322,15 @@ $(function () {
                     $("#addAssetToEmployeeModal").modal("hide");
                     addAssetToEmployeeTable.ajax.reload(null, false);
                     refreshEmployeePartialView(response.data);
-                    toastMessage.html("Pomyślnie dodano zasoby do pracownika");
-                    toastShow.show();
+                    
+                    toast.show("Pomyślnie dodano zasoby do pracownika")
                 }
                 else {
-                    alert("Nie udało się dodać zasobów do pracownika");
+                    toast.show("Nie udało się dodać zasobów do pracownika", "warrning");
                 }
             },
             error: function () {
-                alert("Coś poszło nie tak!");
+                toast.show("Coś poszło nie tak!", "danger");
             }
         })
     });
@@ -326,15 +358,14 @@ $(function () {
                         $("#deleteAssetFromEmployeeModal").modal("hide");
                         addAssetToEmployeeTable.ajax.reload(null, false);
                         refreshEmployeePartialView(response.data);
-                        toastMessage.html("Pomyślnie odebran zasób do pracownika");
-                        toastShow.show();
+                        toast.show("Pomyślnie odebran zasób do pracownika");
                     }
                     else {
-                        alert("Nie udało się odebrać zasobu od pracownika");
+                        toast.show("Nie udało się odebrać zasobu od pracownika", 'warrning');
                     }
                 },
                 error: function () {
-                    alert("Coś poszło nie tak!");
+                    toast.show("Coś poszło nie tak!", "danger");
                 }
             })
         });
