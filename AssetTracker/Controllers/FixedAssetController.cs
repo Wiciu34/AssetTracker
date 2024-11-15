@@ -158,7 +158,6 @@ public class FixedAssetController : Controller
         foreach (int assetId in assetsIds)
         {
             var asset = await _fixedAssetRepository.GetAssetByIdAsync(assetId);
-            asset.AssignmentDate = DateTime.UtcNow;
             assetsToAdd.Add(asset);
         }
 
@@ -171,9 +170,6 @@ public class FixedAssetController : Controller
     public async Task<JsonResult> RemoveAssetFromEmployee(int assetId, int employeeId)
     {
         var assetToRemove = await _fixedAssetRepository.GetAssetByIdAsync(assetId);
-
-        assetToRemove.ReturnDate = DateTime.UtcNow;
-        assetToRemove.AssignmentDate = null;
 
         await _fixedAssetRepository.RemoveAssetFromEmployee(assetToRemove, employeeId);
 

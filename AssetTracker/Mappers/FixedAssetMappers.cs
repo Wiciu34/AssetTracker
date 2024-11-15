@@ -15,8 +15,6 @@ public static class FixedAssetMappers
             SerialNumber = fixedAsset.SerialNumber,
             AssetCode = fixedAsset.AssetCode,
             ExpirationDate = fixedAsset.ExpirationDate,
-            AssignmentDate = fixedAsset.AssignmentDate,
-            ReturnDate = fixedAsset.ReturnDate,
             EmployeeId = fixedAsset.EmployeeId
         };
     }

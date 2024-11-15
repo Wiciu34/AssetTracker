@@ -8,7 +8,5 @@ public class FixedAssetDto
     public string? SerialNumber { get; set; }
     public string? AssetCode { get; set; }
     public DateTime? ExpirationDate { get; set; }
-    public DateTime? AssignmentDate { get; set; }
-    public DateTime? ReturnDate { get; set; }
     public int? EmployeeId { get; set; }
 }

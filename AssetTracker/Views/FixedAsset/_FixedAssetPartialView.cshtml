@@ -34,23 +34,6 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.ExpirationDate)
             </dd>
-            @if(Model.AssignmentDate == null)
-            {
-                <dt class="col-sm-2">
-                    Data oddania:
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ReturnDate)
-                </dd>
-            }
-            else{
-                <dt class="col-sm-2">
-                    Data przyznania:
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.AssignmentDate)
-                </dd>
-            }
         </dl>
         <div class="d-flex justify-content-start align-items-center">
             <button class="btn btn-warning me-3 editAssetBtn" data-id="@Model?.Id" data-bs-toggle="modal" data-bs-target="#addAssetModal">

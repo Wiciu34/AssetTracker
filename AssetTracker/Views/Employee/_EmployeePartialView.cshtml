@@ -56,7 +56,7 @@
                     <button class="btn position-absolute top-0 end-0 mt-2 me-2 deleteAssetFromEmployee" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#deleteAssetFromEmployeeModal">
                         <i class="bi bi-x-lg"></i>
                     </button>
-                    <div class="text-end">
+                   @*  <div class="text-end">
                         @if (item.AssignmentDate.HasValue)
                         {
                             <span class="fw-bold">Data przyznnia: </span> <span class="text-secondary fw-bolder">@item.AssignmentDate.Value.ToShortDateString()</span>
@@ -65,7 +65,7 @@
                         {
                             <span>Brak daty</span>
                         }
-                    </div>
+                    </div> *@
                 </div>
             </div>
         }
