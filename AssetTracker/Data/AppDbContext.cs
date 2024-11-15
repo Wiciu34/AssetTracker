@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Employee> Employees { get; set; }
     public DbSet<FixedAsset> FixedAssets { get; set; }
+    public DbSet<AssetHistory> AssetHistories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -28,5 +29,12 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<FixedAsset>()
             .HasIndex(fa => fa.AssetCode)
             .IsUnique();
+
+        modelBuilder.Entity<AssetHistory>()
+            .HasOne(ah => ah.Asset)
+            .WithMany(ah => ah.AssetHistories)
+            .HasForeignKey(ah => ah.AssetId);
+
+       
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace AssetTracker.DTOs.FixedAsset;
+﻿using AssetTracker.Models;
+
+namespace AssetTracker.DTOs.FixedAsset;
 
 public class FixedAssetDto
 {
@@ -9,4 +11,5 @@ public class FixedAssetDto
     public string? AssetCode { get; set; }
     public DateTime? ExpirationDate { get; set; }
     public int? EmployeeId { get; set; }
+    public ICollection<AssetHistory>? AssetHistories { get; set; }
 }
