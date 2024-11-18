@@ -10,10 +10,12 @@ namespace AssetTracker.Controllers;
 public class FixedAssetController : Controller
 {
     private readonly IFixedAssetRepository _fixedAssetRepository;
+    private readonly IAssetHistoryRepository _assetHistoryRepository;
 
-    public FixedAssetController(IFixedAssetRepository fixedAssetRepository)
+    public FixedAssetController(IFixedAssetRepository fixedAssetRepository, IAssetHistoryRepository assetHistoryRepository)
     {
         _fixedAssetRepository = fixedAssetRepository;
+        _assetHistoryRepository = assetHistoryRepository;
     }
     public IActionResult Index()
     {
@@ -162,6 +164,8 @@ public class FixedAssetController : Controller
         }
 
         await _fixedAssetRepository.AddAssetsToEmployee(assetsToAdd, employeeId);
+
+        await _assetHistoryRepository.addToHistory(assetsToAdd, employeeId);
 
         return Json(new { success = true, data = employeeId});
     }

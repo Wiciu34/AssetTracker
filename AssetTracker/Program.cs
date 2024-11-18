@@ -2,7 +2,6 @@ using AssetTracker.Data;
 using AssetTracker.Interfaces;
 using AssetTracker.Repository;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +11,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IFixedAssetRepository, FixedAssetRepository>();
+builder.Services.AddScoped<IAssetHistoryRepository, AssetHistoryRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
