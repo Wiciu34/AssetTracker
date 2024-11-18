@@ -32,7 +32,8 @@
                 Data gwarancji:
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ExpirationDate)
+                @Model.ExpirationDate.ToString("yyyy-MM-dd")
+                
             </dd>
         </dl>
         <div class="d-flex justify-content-start align-items-center">
@@ -53,7 +54,7 @@
     {
         <div class="card my-3">
             <div class="card-body shadow-lg">
-                <h5 class="card-title">Pracownik: @history.Employee.Name @history.Employee.Surname</h5>
+                <h5 class="card-title">Pracownik: @history.EmployeeName @history.EmployeeSurname</h5>
 
                 <p class="card-text">
                     <strong>Data rozpoczęcia:</strong> @history.StartDate.ToString("yyyy-MM-dd")
@@ -78,10 +79,12 @@
                         ? history.EndDate.Value - history.StartDate
                         : DateTime.Now - history.StartDate;
                         var days = duration.Days;
-                        var hours = duration.Hours;
-                        var minutes = duration.Minutes;
                     }
-                    @days dni, @hours godz., @minutes min.
+                    @if(days != 0)
+                    {
+                        <span>@days dni,</span>
+                    }
+                    
                 </p>
             </div>
         </div>

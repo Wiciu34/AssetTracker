@@ -14,5 +14,5 @@ public class CreateUpdateAssetDto
     public string? AssetCode { get; set; }
     [DataType(DataType.DateTime)]
     [Required(ErrorMessage = "Data ważności jest wymagana!")]
-    public DateTime? ExpirationDate { get; set; }
+    public DateTime ExpirationDate { get; set; }
 }

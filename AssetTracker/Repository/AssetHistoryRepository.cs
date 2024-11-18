@@ -1,6 +1,7 @@
 ﻿using AssetTracker.Data;
 using AssetTracker.Interfaces;
 using AssetTracker.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetTracker.Repository;
@@ -12,7 +13,7 @@ public class AssetHistoryRepository : IAssetHistoryRepository
     {
         _context = context;
     }
-    public async Task addToHistory(List<FixedAsset> assets, int employeeId)
+    public async Task AddToHistory(List<FixedAsset> assets, int employeeId)
     {
         List<AssetHistory> history = new List<AssetHistory>();
 
@@ -49,8 +50,19 @@ public class AssetHistoryRepository : IAssetHistoryRepository
         await _context.SaveChangesAsync();
     }
 
-    public Task endHistory(int assetId, int employeeId)
+    public async Task EndHistory(FixedAsset asset)
     {
-        throw new NotImplementedException();
+        var historyItem = await _context.AssetHistories.Where(ah => ah.AssetId == asset.Id && ah.EndDate == null).FirstOrDefaultAsync();
+
+        if (historyItem == null)
+        {
+            throw new InvalidOperationException("Cannot find history for this asset");
+        }
+
+        historyItem.EndDate = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+
     }
 }

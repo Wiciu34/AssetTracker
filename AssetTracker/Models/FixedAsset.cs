@@ -11,7 +11,7 @@ public class FixedAsset
     public string? SerialNumber { get; set; }
     public string? AssetCode { get; set; }
     [DataType(DataType.DateTime)]
-    public DateTime? ExpirationDate { get; set; }
+    public DateTime ExpirationDate { get; set; }
     public int? EmployeeId { get; set; }
     public Employee? Employee { get; set; }
     public ICollection<AssetHistory>? AssetHistories { get; set; } 

@@ -165,7 +165,7 @@ public class FixedAssetController : Controller
 
         await _fixedAssetRepository.AddAssetsToEmployee(assetsToAdd, employeeId);
 
-        await _assetHistoryRepository.addToHistory(assetsToAdd, employeeId);
+        await _assetHistoryRepository.AddToHistory(assetsToAdd, employeeId);
 
         return Json(new { success = true, data = employeeId});
     }
@@ -176,6 +176,8 @@ public class FixedAssetController : Controller
         var assetToRemove = await _fixedAssetRepository.GetAssetByIdAsync(assetId);
 
         await _fixedAssetRepository.RemoveAssetFromEmployee(assetToRemove, employeeId);
+
+        await _assetHistoryRepository.EndHistory(assetToRemove);
 
         return Json(new { success = true, data = employeeId });
     }
