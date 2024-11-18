@@ -35,7 +35,7 @@ public class FixedAssetRepository : IFixedAssetRepository
             throw new InvalidOperationException("Entity set 'FixedAssets' is null");
         }
 
-        var fixedAsset = await _context.FixedAssets.SingleOrDefaultAsync(fa => fa.Id == id);
+        var fixedAsset = await _context.FixedAssets.Include(ah => ah.AssetHistories).ThenInclude(e => e.Employee).SingleOrDefaultAsync(fa => fa.Id == id);
 
         if (fixedAsset == null)
         {
