@@ -1,4 +1,5 @@
 ﻿using AssetTracker.Interfaces;
+using AssetTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetTracker.Controllers;
@@ -21,5 +22,20 @@ public class DashboardController : Controller
             Assigned = assignedCount,
             unassigned = unassignedCount,
         });
+    }
+
+    [HttpGet]
+    public async Task<JsonResult> EmployeesWithMostAssets()
+    {
+        List<Employee> list = await _repository.GetEmployeeWithTheMostAssets();
+
+        var assetCounts = list.Select(emp => new
+        {
+            EmployeeName = emp.Name + " " + emp.Surname,
+            AssetCount = emp.FixedAssets?.Count(),
+
+        }).ToList();
+
+        return Json(assetCounts);
     }
 }

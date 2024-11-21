@@ -1,5 +1,6 @@
 ﻿using AssetTracker.Data;
 using AssetTracker.Interfaces;
+using AssetTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetTracker.Repository;
@@ -28,5 +29,14 @@ public class DashboardRepository : IDashboardRepository
     public async Task<int> GetAssignedAssetsCountAsync()
     {
         return await _context.FixedAssets.Where(a => a.EmployeeId != null).CountAsync();
+    }
+
+    public async Task<List<Employee>> GetEmployeeWithTheMostAssets()
+    {
+        return await _context.Employees
+            .Include(a => a.FixedAssets)
+            .OrderByDescending(e => e.FixedAssets.Count())
+            .Take(10)
+            .ToListAsync();
     }
 }
