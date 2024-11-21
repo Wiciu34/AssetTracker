@@ -74,12 +74,12 @@ public class FixedAssetController : Controller
             {
                 if (ex.InnerException?.Message.Contains("IX_FixedAssets_SerialNumber") == true)
                 {
-                    ModelState.AddModelError("SerialNumber", "Numer seryjny jest już w użyciu.");
+                    ModelState.AddModelError("assetDto.SerialNumber", "Numer seryjny jest już w użyciu.");
                 }
 
                 if(ex.InnerException?.Message.Contains("IX_FixedAssets_AssetCode") == true)
                 {
-                    ModelState.AddModelError("AssetCode", "Kod zasobu jest już w użyciu.");
+                    ModelState.AddModelError("assetDto.AssetCode", "Kod zasobu jest już w użyciu.");
                 }
 
                 if (!ex.InnerException.Message.Contains("IX_FixedAssets_SerialNumber") &&

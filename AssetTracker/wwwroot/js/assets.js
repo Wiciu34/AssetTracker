@@ -201,6 +201,7 @@ $(function () {
                 $("#" + errorId).html(errors[key]);
             }
         }
+        console.log(errors);
     }
 
     function clearErrorMessages() {
