@@ -19,4 +19,14 @@ public class DashboardRepository : IDashboardRepository
     {
         return await _context.FixedAssets.CountAsync();
     }
+
+    public async Task<int> GetUnassignedAssetsCountAsync()
+    {
+        return await _context.FixedAssets.Where(a => a.EmployeeId == null).CountAsync();
+    }
+
+    public async Task<int> GetAssignedAssetsCountAsync()
+    {
+        return await _context.FixedAssets.Where(a => a.EmployeeId != null).CountAsync();
+    }
 }
