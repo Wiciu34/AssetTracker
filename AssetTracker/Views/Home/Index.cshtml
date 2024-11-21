@@ -1,6 +1,12 @@
-﻿@{
+﻿@model AssetTracker.Models.DashboardCounts
+
+@{
     ViewData["Title"] = "Home Page";
 }
+
+<p>Liczba pracowników: @Model.EmployeesCount</p>
+
+<p>Liczba zasobów: @Model.AssetsCount</p>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
