@@ -9,4 +9,5 @@ public interface IDashboardRepository
     Task<int> GetUnassignedAssetsCountAsync();
     Task<int> GetAssignedAssetsCountAsync();
     Task<List<Employee>> GetEmployeeWithTheMostAssets();
+    Task<List<AssetHistory>> GetNewlyGrantedAssets();
 }

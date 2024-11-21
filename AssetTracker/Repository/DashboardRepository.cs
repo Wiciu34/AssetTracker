@@ -35,8 +35,18 @@ public class DashboardRepository : IDashboardRepository
     {
         return await _context.Employees
             .Include(a => a.FixedAssets)
+            .Where(e => e.FixedAssets.Any())
             .OrderByDescending(e => e.FixedAssets.Count())
             .Take(10)
+            .ToListAsync();
+    }
+
+    public async Task<List<AssetHistory>> GetNewlyGrantedAssets()
+    {
+        return await _context.AssetHistories
+            .Include(a => a.Asset)
+            .OrderBy(ah => ah.StartDate)
+            .Take(4)
             .ToListAsync();
     }
 }

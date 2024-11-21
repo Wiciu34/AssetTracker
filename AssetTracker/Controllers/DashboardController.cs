@@ -25,7 +25,7 @@ public class DashboardController : Controller
     }
 
     [HttpGet]
-    public async Task<JsonResult> EmployeesWithMostAssets()
+    public async Task<JsonResult> EmployeesWithTheMostAssets()
     {
         List<Employee> list = await _repository.GetEmployeeWithTheMostAssets();
 
@@ -37,5 +37,21 @@ public class DashboardController : Controller
         }).ToList();
 
         return Json(assetCounts);
+    }
+
+    [HttpGet]
+    public async Task<JsonResult> NewlyGrantedAssets()
+    {
+        var assetsHistories = await _repository.GetNewlyGrantedAssets();
+
+        var grantedAssets = assetsHistories.Select(ah => new
+        {
+            Name = ah.Asset?.Name,
+            Model = ah.Asset?.Model,
+            AssetStartDate = ah.StartDate,
+
+        }).ToList();
+
+        return Json(grantedAssets);
     }
 }
