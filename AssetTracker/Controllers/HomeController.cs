@@ -1,4 +1,6 @@
+using AssetTracker.DTOs.Dashboard;
 using AssetTracker.Interfaces;
+using AssetTracker.Mappers;
 using AssetTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -19,10 +21,15 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var counts = new DashboardCounts
+        var assetsHistories = await _repository.GetNewlyGrantedAssets();
+
+        var grantedAssets = assetsHistories.Select(a => a.ToGrantedAssetDto()).ToList();
+
+        var counts = new Dashboard
         {
             EmployeesCount = await _repository.GetEmployyeCountAsync(),
             AssetsCount = await _repository.GetAssetCountAsync(),
+            NewlyGrantedAssets = grantedAssets
         };
         
         return View(counts);

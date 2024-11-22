@@ -5,7 +5,7 @@ namespace AssetTracker.Mappers;
 
 public static class DashboardMappers
 {
-    public static GrantedAsset FromAssetHistoryToGrantedAsset(this AssetHistory assetHistory)
+    public static GrantedAsset ToGrantedAssetDto(this AssetHistory assetHistory)
     {
         return new GrantedAsset
         {

@@ -35,7 +35,7 @@ $(function () {
         error: function (error) {
             console.error("Błąd podczas pobiernaia danych:", error);
         }
-    })
+    });
 
     // Pie chart for dasboard
 
@@ -59,7 +59,7 @@ $(function () {
                         ],
                         borderColor: [
                             'rgba(75, 192, 192, 1)',
-                            'rgba(255, 99, 132, 1)'  
+                            'rgba(255, 99, 132, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -68,7 +68,7 @@ $(function () {
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'top', 
+                            position: 'top',
                         }
                     }
                 }
@@ -78,5 +78,5 @@ $(function () {
         error: function (error) {
             console.error("Błąd podczas pobiernaia danych:", error);
         }
-    })
+    });
 });
