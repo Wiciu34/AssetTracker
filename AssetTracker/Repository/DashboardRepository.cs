@@ -45,7 +45,8 @@ public class DashboardRepository : IDashboardRepository
     {
         return await _context.AssetHistories
             .Include(a => a.Asset)
-            .OrderBy(ah => ah.StartDate)
+            .Where(ah => ah.EndDate == null)
+            .OrderByDescending(ah => ah.StartDate)
             .Take(4)
             .ToListAsync();
     }

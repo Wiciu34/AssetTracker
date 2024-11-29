@@ -23,12 +23,16 @@ $(function () {
                     }]
                 },
                 options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+                    //responsive: true,
+                    //maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 20, // Odstęp od góry (np. od legendy)
+                            bottom: 20,
+                            left: 20,
+                            right: 20
+                        },
+                    },
                 }
             })
         },
@@ -47,7 +51,7 @@ $(function () {
             let ctx = document.getElementById('pieChart');
 
             new Chart(ctx, {
-                type: 'pie',
+                type: 'doughnut',
                 data: {
                     labels: ['Przypisane zasoby', 'Nieprzypisane zasoby'],
                     datasets: [{
@@ -65,12 +69,27 @@ $(function () {
                     }]
                 },
                 options: {
-                    responsive: true,
+                    //responsive: true,
+                    //maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 10, // Odstęp od góry (np. od legendy)
+                            bottom: 10,
+                            left: 10,
+                            right: 10
+                        },
+                    },
                     plugins: {
                         legend: {
                             position: 'top',
+                            labels: {
+                                padding: 10
+                            }
                         }
-                    }
+                    },
+
+                   
+
                 }
             })
 
