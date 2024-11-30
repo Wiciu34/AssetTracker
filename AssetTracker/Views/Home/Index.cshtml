@@ -5,21 +5,28 @@
 }
 
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col">
-            <div class="card">
-                <h5 class="card-title">Liczba Pracowników: @Model.EmployeesCount</h5>
+        <div class="col-lg-6 col-12">
+            <div class="card" style="background-color: #E9ECEF">
+                <div class="card-body">
+                    <h5 class="card-title">Łączna ilość pracowników </h5>
+                    <p class="card-text"><i class="bi bi-person fs-1"></i> <span class="fs-1">@Model.EmployeesCount</span></p>
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card">
-                <h5 class="card-title">Liczba zasobów: @Model.AssetsCount</h5>
+        <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+            <div class="card style=" style="background-color: #FFF3CD">
+                <div class="card-body">
+                    <h5 class="card-title">Łączna ilość zasobów</h5>
+                    <p class="card-text"><i class="bi bi-gear fs-1"></i> <span class="fs-1">@Model.AssetsCount</span></p>
+                </div>
+                
             </div>
         </div>
     </div>
     <div class="row mt-5">
-        <div class="col-lg-8 col-12 me-3 mb-lg-0 mb-2 border border-1" @* style="min-width: 450px *@">
+        <div class="col-lg-8 col-12 me-3 mb-lg-0 mb-2 border border-1">
             <canvas id="barChart"></canvas>
         </div>
         <div class="col-lg-3 col-12 d-flex justify-content-center align-items-center border border-1">
@@ -27,17 +34,6 @@
         </div>
     </div>
 </div>
-
-@* <div class="">
-    <div class="d-flex flex-row flex-wrap justify-content-between gap-3">
-        <div class="border border-1 w-75" style="min-width: 450px">
-            <canvas id="barChart"></canvas>
-        </div>
-        <div class="border border-1 d-flex justify-content-center align-items-center">
-            <canvas id="pieChart"></canvas>
-        </div>
-    </div> 
-</div> *@
 
 <table>
     <thead>

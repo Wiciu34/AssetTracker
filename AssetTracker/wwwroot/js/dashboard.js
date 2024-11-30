@@ -17,17 +17,24 @@ $(function () {
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Pracownicy z największą ilością zasobów',
+                        label: 'liczba zasobów',
                         data: dataPoints,
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    //responsive: true,
-                    //maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "Pracownicy z największą ilością zasobów",
+                            padding: {
+                                bottom: 20
+                            }
+                        }
+                    },
                     layout: {
                         padding: {
-                            top: 20, // Odstęp od góry (np. od legendy)
+                            top: 20,
                             bottom: 20,
                             left: 20,
                             right: 20
@@ -69,8 +76,6 @@ $(function () {
                     }]
                 },
                 options: {
-                    //responsive: true,
-                    //maintainAspectRatio: false,
                     layout: {
                         padding: {
                             top: 10, // Odstęp od góry (np. od legendy)
@@ -80,6 +85,13 @@ $(function () {
                         },
                     },
                     plugins: {
+                        title: {
+                            display: true,
+                            text: "Rozkład zasobów",
+                            padding: {
+                                bottom: 30
+                            }
+                        },
                         legend: {
                             position: 'top',
                             labels: {
