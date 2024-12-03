@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 col-12">
+        <div class="col-lg-6 col-12 ps-lg-0 pe-lg-2 ps-0 pe-0">
             <div class="card" style="background-color: #E9ECEF">
                 <div class="card-body">
                     <h5 class="card-title">Łączna ilość pracowników </h5>
@@ -15,8 +15,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-12 mt-lg-0 mt-2">
-            <div class="card style=" style="background-color: #FFF3CD">
+        <div class="col-lg-6 col-12 mt-lg-0 mt-2 pe-lg-0 ps-lg-2 pe-0 ps-0">
+            <div class="card" style="background-color: #FFF3CD">
                 <div class="card-body">
                     <h5 class="card-title">Łączna ilość zasobów</h5>
                     <p class="card-text"><i class="bi bi-gear fs-1"></i> <span class="fs-1">@Model.AssetsCount</span></p>
@@ -25,15 +25,18 @@
             </div>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-lg-8 col-12 me-3 mb-lg-0 mb-2 border border-1">
+    <div class="row mt-4">
+        <div class="col-lg-8 col-12 mb-lg-0 mb-2 border border-1">
             <canvas id="barChart"></canvas>
         </div>
-        <div class="col-lg-3 col-12 d-flex justify-content-center align-items-center border border-1">
+        <div class="col-lg-4 col-12 d-flex justify-content-center align-items-center border border-1">
             <canvas id="pieChart"></canvas>
         </div>
     </div>
 </div>
+
+
+
 
 <table>
     <thead>
