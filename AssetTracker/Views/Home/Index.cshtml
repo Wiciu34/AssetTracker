@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 col-12 ps-lg-0 pe-lg-2 ps-0 pe-0">
+        <div class="col-lg-6 col-12">
             <div class="card" style="background-color: #E9ECEF">
                 <div class="card-body">
                     <h5 class="card-title">Łączna ilość pracowników </h5>
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-12 mt-lg-0 mt-2 pe-lg-0 ps-lg-2 pe-0 ps-0">
+        <div class="col-lg-6 col-12 mt-lg-0 mt-2">
             <div class="card" style="background-color: #FFF3CD">
                 <div class="card-body">
                     <h5 class="card-title">Łączna ilość zasobów</h5>
@@ -26,19 +26,33 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-lg-8 col-12 mb-lg-0 mb-2 border border-1">
-            <canvas id="barChart"></canvas>
+        <div class="col-lg-8 col-12 mb-lg-0 mb-2 ">
+            <canvas class="border border-1" id="barChart"></canvas>
         </div>
-        <div class="col-lg-4 col-12 d-flex justify-content-center align-items-center border border-1">
-            <canvas id="pieChart"></canvas>
+        <div class="col-lg-4 col-12 d-flex justify-content-center align-items-center pt-0">
+            <canvas class="d-block h-100 w-100 border border-1" id="pieChart"></canvas>
         </div>
+    </div>
+    <div class="row mt-4">
+        @foreach(var asset in Model.NewlyGrantedAssets)
+        {
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="card h-100 w-100 position-relative">
+                    <div class="card-body">
+                        <h5 class="card-title">@asset.Name</h5>
+                        <h6 class="card-subtitle text-secondary">@asset.Model</h6>
+                        <span class="position-absolute top-0 end-0 mt-2 me-2 text-muted fw-bold">@asset.AssetStartDate.ToString("yyyy-MM-dd")</span>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
 
 
 
 
-<table>
+@* <table>
     <thead>
         <tr>
             <th>Nazwa</th>
@@ -56,4 +70,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@
