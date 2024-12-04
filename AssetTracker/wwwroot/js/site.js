@@ -358,7 +358,7 @@ $(function () {
                         $("#deleteAssetFromEmployeeModal").modal("hide");
                         addAssetToEmployeeTable.ajax.reload(null, false);
                         refreshEmployeePartialView(response.data);
-                        toast.show("Pomyślnie odebran zasób do pracownika");
+                        toast.show("Pomyślnie odebrano zasób do pracownika");``
                     }
                     else {
                         toast.show("Nie udało się odebrać zasobu od pracownika", 'warrning');
