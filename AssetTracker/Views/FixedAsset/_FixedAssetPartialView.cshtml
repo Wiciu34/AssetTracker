@@ -55,9 +55,9 @@
         <div class="card my-3">
             <div class="card-body shadow-lg">
                 <h5 class="card-title">Pracownik: @history.EmployeeName @history.EmployeeSurname</h5>
-
+                <p class="card-text"><b>Miejsce pracy:</b> @history.EmployeeWorkplace</p>
                 <p class="card-text">
-                    <strong>Data rozpoczęcia:</strong> @history.StartDate.ToString("yyyy-MM-dd")
+                    <b>Data rozpoczęcia:</b> @history.StartDate.ToString("yyyy-MM-dd")
                 </p>
 
                 <p class="card-text">
@@ -73,7 +73,7 @@
                 </p>
 
                 <p class="card-text">
-                    <strong>Czas trwania:</strong>
+                    <b>Czas trwania:</b>
                     @{
                         var duration = history.EndDate.HasValue
                         ? history.EndDate.Value - history.StartDate

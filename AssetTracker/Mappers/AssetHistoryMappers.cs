@@ -13,6 +13,7 @@ public static class AssetHistoryMappers
             AssetId = assetHistory.AssetId,
             EmployeeName = assetHistory.Employee?.Name,
             EmployeeSurname = assetHistory.Employee?.Surname,
+            EmployeeWorkplace = assetHistory.Employee.Workplace,
             StartDate = assetHistory.StartDate,
             EndDate = assetHistory.EndDate,
         };
