@@ -1,7 +1,9 @@
-﻿using AssetTracker.DTOs.FixedAsset;
+﻿using AssetTracker.DTOs.AssetHistory;
+using AssetTracker.DTOs.FixedAsset;
 using AssetTracker.Interfaces;
 using AssetTracker.Mappers;
 using AssetTracker.Models;
+using AssetTracker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,24 +33,51 @@ public class FixedAssetController : Controller
         return Json(new {data = assetsDto});
     }
 
-    public async Task<IActionResult> Details(int id)
+    private async Task<FixedAssetViewModel> GetFixedAssetViewModelAsync(int id, int? pageNumber)
     {
+        const int pageSize = 2;
+
         var asset = await _fixedAssetRepository.GetAssetByIdAsync(id);
 
         if (asset == null)
         {
+            return null;
+        }
+
+        var list = asset.AssetHistories?.Select(a => a.ToAssetHistoryDto()).ToList();
+
+        var paginatedAssetHistory = PaginatedList<AssetHistoryDto>.Create(list, pageNumber ?? 1, pageSize);
+
+        return new FixedAssetViewModel
+        {
+            Asset = asset.ToFixedAssetDto(),
+            AssetHistories = paginatedAssetHistory
+        };
+    }
+
+    public async Task<IActionResult> Details(int id, int? pageNumber)
+    {
+        var viewModel = await GetFixedAssetViewModelAsync(id, pageNumber);
+
+        if (viewModel == null)
+        {
             return NotFound();
         }
 
-        return View(asset.ToFixedAssetDto());
+        return View(viewModel);
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAssetPartialView(int id)
+    public async Task<IActionResult> GetAssetPartialView(int id, int? pageNumber)
     {
-        var asset = await _fixedAssetRepository.GetAssetByIdAsync(id);
+        var viewModel = await GetFixedAssetViewModelAsync(id, pageNumber);
 
-        return PartialView("_FixedAssetPartialView", asset.ToFixedAssetDto());
+        if (viewModel == null)
+        {
+            return NotFound();
+        }
+
+        return PartialView("_FixedAssetPartialView", viewModel);
     }
 
     [HttpGet]

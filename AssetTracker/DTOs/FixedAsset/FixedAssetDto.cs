@@ -12,5 +12,4 @@ public class FixedAssetDto
     public string? AssetCode { get; set; }
     public DateTime ExpirationDate { get; set; }
     public int? EmployeeId { get; set; }
-    public ICollection<AssetHistoryDto>? AssetHistories { get; set; }
 }

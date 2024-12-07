@@ -16,7 +16,6 @@ public static class FixedAssetMappers
             AssetCode = fixedAsset.AssetCode,
             ExpirationDate = fixedAsset.ExpirationDate,
             EmployeeId = fixedAsset.EmployeeId,
-            AssetHistories = fixedAsset.AssetHistories?.Select(ah => ah.ToAssetHistoryDto()).ToList(),
         };
     }
 
