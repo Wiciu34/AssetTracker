@@ -6,6 +6,14 @@
     });
 }
 
+function getIdFromUrl() {
+    let path = window.location.pathname;
+    let segments = path.split('/');
+    let id = segments[segments.length - 1];
+
+    return id;
+}
+
 $(function () {
     //Get All
     var assetTable = $('#AssetTable').DataTable({
@@ -105,7 +113,7 @@ $(function () {
     //Delete Asset
     $(document).on('click', ".deleteAssetBtn", function () {
 
-        var assetId = $(this).data("id");
+        let assetId = $(this).data("id");
 
         getAsset(assetId).done(function (response) {
             $('#asset-data').html(response.data.assetCode);
@@ -135,9 +143,39 @@ $(function () {
         });
     });
 
-    function refreshFixedAssetPartialView(assetId) {
+    $(document).on('click', ".asset-history-link", function (e) {
+
+        e.preventDefault();
+
+        let id = getIdFromUrl();
+        
+        let pageNumber = $(this).data("page")
+
+        refreshFixedAssetPartialView(id, pageNumber);
+    });
+
+    window.addEventListener('popstate', function () {
+        if ($('#fixedAssetDetailsContainer .asset-history-pagination').length === 0) {
+            return;
+        }
+
+        let id = getIdFromUrl();
+
+        let urlParams = new URLSearchParams(window.location.search);
+        let pageNumber = urlParams.get('pageNumber') || 1;
+
+        refreshFixedAssetPartialView(id, pageNumber);
+    });
+
+    function refreshFixedAssetPartialView(assetId, pageNumber = 1) {
+
+        let currentPath = window.location.pathname;
+        let newUrl = `${currentPath}?pageNumber=${pageNumber}`;
+
+        history.pushState(null, '', newUrl);
+
         $.ajax({
-            url: "/FixedAsset/GetAssetPartialView/" + assetId,
+            url: `/FixedAsset/GetAssetPartialView/${assetId}?pageNumber=${pageNumber}`,
             type: "GET",
             success: function (response) {
                 $('#fixedAssetDetailsContainer').html(response);
