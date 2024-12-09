@@ -35,7 +35,7 @@ public class FixedAssetController : Controller
 
     private async Task<FixedAssetViewModel> GetFixedAssetViewModelAsync(int id, int? pageNumber)
     {
-        const int pageSize = 2;
+        const int pageSize = 4;
 
         var asset = await _fixedAssetRepository.GetAssetByIdAsync(id);
 

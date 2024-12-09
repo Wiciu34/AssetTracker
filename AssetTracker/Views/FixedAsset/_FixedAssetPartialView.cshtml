@@ -49,45 +49,48 @@
 
 <h2 class="text-center m-5">Historia zasobu</h2>
 
-<div class="history-container">
+<div class="history-container d-flex flex-wrap">
     @foreach (var history in Model.AssetHistories.Items)
     {
-        <div class="card my-3">
-            <div class="card-body shadow-lg">
-                <h5 class="card-title">Pracownik: @history.EmployeeName @history.EmployeeSurname</h5>
-                <p class="card-text"><b>Miejsce pracy:</b> @history.EmployeeWorkplace</p>
-                <p class="card-text">
-                    <b>Data rozpoczęcia:</b> @history.StartDate.ToString("yyyy-MM-dd")
-                </p>
+        <div class="col-lg-6 col-12">
+            <div class="card my-3 mx-2 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Pracownik: @history.EmployeeName @history.EmployeeSurname</h5>
+                    <p class="card-text"><b>Miejsce pracy:</b> @history.EmployeeWorkplace</p>
+                    <p class="card-text">
+                        <b>Data rozpoczęcia:</b> @history.StartDate.ToString("yyyy-MM-dd")
+                    </p>
 
-                <p class="card-text">
-                    <strong>Data zakończenia:</strong>
-                    @if (history.EndDate.HasValue)
-                    {
-                        @history.EndDate.Value.ToString("yyyy-MM-dd")
-                    }
-                    else
-                    {
-                        <span>W użyciu</span>
-                    }
-                </p>
+                    <p class="card-text">
+                        <strong>Data zakończenia:</strong>
+                        @if (history.EndDate.HasValue)
+                        {
+                            @history.EndDate.Value.ToString("yyyy-MM-dd")
+                        }
+                        else
+                        {
+                            <span>W użyciu</span>
+                        }
+                    </p>
 
-                <p class="card-text">
-                    <b>Czas trwania:</b>
-                    @{
-                        var duration = history.EndDate.HasValue
-                        ? history.EndDate.Value - history.StartDate
-                        : DateTime.Now - history.StartDate;
-                        var days = duration.Days;
-                    }
-                    @if(days != 0)
-                    {
-                        <span>@days dni,</span>
-                    }
-                    
-                </p>
+                    <p class="card-text">
+                        <b>Czas trwania:</b>
+                        @{
+                            var duration = history.EndDate.HasValue
+                            ? history.EndDate.Value - history.StartDate
+                            : DateTime.Now - history.StartDate;
+                            var days = duration.Days;
+                        }
+                        @if (days != 0)
+                        {
+                            <span>@days dni,</span>
+                        }
+
+                    </p>
+                </div>
             </div>
         </div>
+     
     }
 </div>
 @{
