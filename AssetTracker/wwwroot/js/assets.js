@@ -164,15 +164,18 @@ $(function () {
         let urlParams = new URLSearchParams(window.location.search);
         let pageNumber = urlParams.get('pageNumber') || 1;
 
-        refreshFixedAssetPartialView(id, pageNumber);
+        refreshFixedAssetPartialView(id, pageNumber, false);
+
     });
 
-    function refreshFixedAssetPartialView(assetId, pageNumber = 1) {
+    function refreshFixedAssetPartialView(assetId, pageNumber = 1, pushToHistory = true) {
 
         let currentPath = window.location.pathname;
         let newUrl = `${currentPath}?pageNumber=${pageNumber}`;
 
-        history.pushState(null, '', newUrl);
+        if (pushToHistory) {
+            history.pushState(null, '', newUrl);
+        }
 
         $.ajax({
             url: `/FixedAsset/GetAssetPartialView/${assetId}?pageNumber=${pageNumber}`,
