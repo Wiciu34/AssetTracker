@@ -97,10 +97,14 @@
             <div class="col-md-6 mt-3">
                 <nav class="asset-history-pagination">
                     <ul class="pagination justify-content-end">
+                        <li class="page-item @(Model.AssetHistories.PageIndex != 1 ? "" : "disabled")">
+                            <a class="page-link asset-history-link" data-page="1" aria-label="First">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
                         <li class="page-item @(Model.AssetHistories.HasPreviousPage ? "" : "disabled")">
                             <a class="page-link asset-history-link" data-page="@(Model.AssetHistories.PageIndex - 1)" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
+                                <span aria-hidden="true">&lsaquo;</span>
                             </a>
                         </li>
                         @for (int i = 1; i <= Model.AssetHistories.TotalPages; i++)
@@ -111,8 +115,12 @@
                         }
                         <li class="page-item @(Model.AssetHistories.HasNextPage ? "" : "disabled")">
                             <a class="page-link asset-history-link" data-page="@(Model.AssetHistories.PageIndex + 1)" aria-label="Next">
+                                <span aria-hidden="true">&rsaquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item @(Model.AssetHistories.PageIndex != Model.AssetHistories.TotalPages ? "" : "disabled")">
+                            <a class="page-link asset-history-link" data-page="@(Model.AssetHistories.TotalPages)" aria-label="Last">
                                 <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
                             </a>
                         </li>
                     </ul>
