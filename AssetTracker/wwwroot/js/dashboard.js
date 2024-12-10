@@ -78,10 +78,10 @@ $(function () {
                 options: {
                     layout: {
                         padding: {
-                            top: 10, // Odstęp od góry (np. od legendy)
-                            bottom: 10,
-                            left: 10,
-                            right: 10
+                            top: 20, // Odstęp od góry (np. od legendy)
+                            bottom: 20,
+                            left: 20,
+                            right: 20
                         },
                     },
                     plugins: {
@@ -89,7 +89,7 @@ $(function () {
                             display: true,
                             text: "Rozkład zasobów",
                             padding: {
-                                bottom: 30
+                                bottom: 30,
                             }
                         },
                         legend: {
