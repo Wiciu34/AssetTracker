@@ -171,9 +171,42 @@ $(function () {
         });
     };
 
-    function refreshEmployeePartialView(employeeId) {
+    $(document).on('click', ".asset-link", function (e) {
+
+        e.preventDefault();
+
+        let id = getIdFromUrl();
+
+        let pageNumber = $(this).data("page")
+
+        refreshEmployeePartialView(id, pageNumber);
+
+    });
+
+    window.addEventListener('popstate', function () {
+        if ($('#employeeDetailsContainer .assets-pagination').length === 0) {
+            return;
+        }
+
+        let id = getIdFromUrl();
+
+        let urlParams = new URLSearchParams(window.location.search);
+        let pageNumber = urlParams.get('pageNumber') || 1;
+
+        refreshEmployeePartialView(id, pageNumber, false);
+    });
+
+    function refreshEmployeePartialView(employeeId, pageNumber = 1, pushToHistory = true) {
+
+        let currentPath = window.location.pathname;
+        let newUrl = `${currentPath}?pageNumber=${pageNumber}`;
+
+        if (pushToHistory) {
+            history.pushState(null, '', newUrl);
+        }
+
         $.ajax({
-            url: "/Employee/GetEmployeePartialView/" + employeeId,
+            url: `/Employee/GetEmployeePartialView/${employeeId}?pageNumber=${pageNumber}`,
             type: "GET",
             success: function (response) {
                 $('#employeeDetailsContainer').html(response);

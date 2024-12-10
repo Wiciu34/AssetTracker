@@ -43,7 +43,8 @@
                     </button>
                 </div>
             </div>
-      </div>
+        </div>
+    </div>
 </div>
 
 <h2 class="text-center m-5">Przypisane zasoby</h2>
@@ -67,5 +68,46 @@
 
         }
 </div>
+
+    @{
+        if (Model.FixedAssets.HasPreviousPage || Model.FixedAssets.HasNextPage)
+        {
+            <div class="row justify-content-end">
+                <div class="col-md-6 mt-3">
+                    <nav class="assets-pagination">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item @(Model.FixedAssets.PageIndex != 1 ? "" : "disabled")">
+                                <a class="page-link asset-link" data-page="1" aria-label="First">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item @(Model.FixedAssets.HasPreviousPage ? "" : "disabled")">
+                                <a class="page-link asset-link" data-page="@(Model.FixedAssets.PageIndex - 1)" aria-label="Previous">
+                                    <span aria-hidden="true">&lsaquo;</span>
+                                </a>
+                            </li>
+                            @for (int i = 1; i <= Model.FixedAssets.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.FixedAssets.PageIndex ? "active" : "")">
+                                    <a class="page-link asset-link" data-page="@i">@i</a>
+                                </li>
+                            }
+                            <li class="page-item @(Model.FixedAssets.HasNextPage ? "" : "disabled")">
+                                <a class="page-link asset-link" data-page="@(Model.FixedAssets.PageIndex + 1)" aria-label="Next">
+                                    <span aria-hidden="true">&rsaquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item @(Model.FixedAssets.PageIndex != Model.FixedAssets.TotalPages ? "" : "disabled")">
+                                <a class="page-link asset-link" data-page="@(Model.FixedAssets.TotalPages)" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        }
+    }
 
 
