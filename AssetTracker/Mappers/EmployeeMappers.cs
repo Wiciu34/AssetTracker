@@ -15,7 +15,6 @@ public static class EmployeeMappers
             Position = employee.Position,
             Workplace = employee.Workplace,
             Email = employee.Email,
-            FixedAssets = employee.FixedAssets?.Select(f => f.ToFixedAssetDto()).ToList(),
         };
     }
 

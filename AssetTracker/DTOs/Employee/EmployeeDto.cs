@@ -11,5 +11,4 @@ public class EmployeeDto
     public string? Position { get; set; }
     public Workplace? Workplace { get; set; }
     public string? Email { get; set; }
-    public ICollection<FixedAssetDto>? FixedAssets { get; set; }
 }

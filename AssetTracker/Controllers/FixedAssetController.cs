@@ -44,9 +44,9 @@ public class FixedAssetController : Controller
             return null;
         }
 
-        var list = asset.AssetHistories?.Select(a => a.ToAssetHistoryDto()).ToList();
+        var assetHistories = asset.AssetHistories?.Select(a => a.ToAssetHistoryDto()).ToList();
 
-        var paginatedAssetHistory = PaginatedList<AssetHistoryDto>.Create(list, pageNumber ?? 1, pageSize);
+        var paginatedAssetHistory = PaginatedList<AssetHistoryDto>.Create(assetHistories, pageNumber ?? 1, pageSize);
 
         return new FixedAssetViewModel
         {

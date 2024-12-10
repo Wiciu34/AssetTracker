@@ -1,8 +1,11 @@
 ﻿using AssetTracker.Data.Enum;
 using AssetTracker.DTOs.Employee;
+using AssetTracker.DTOs.FixedAsset;
 using AssetTracker.Helpers;
 using AssetTracker.Interfaces;
 using AssetTracker.Mappers;
+using AssetTracker.Models;
+using AssetTracker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetTracker.Controllers
@@ -29,26 +32,53 @@ namespace AssetTracker.Controllers
             return Json(new {data = employeesDto});
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<EmployeeViewModel> GetEmployeeViewModelAsync(int id, int? pageNumber)
         {
+            const int pageSize = 2;
+
             var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
 
-            if(employee == null)
+            if (employee == null)
+            {
+                return null;
+            }
+
+            var employeeAssets = employee.FixedAssets?.Select(a => a.ToFixedAssetDto()).ToList();
+
+            var paginatedAssets = PaginatedList<FixedAssetDto>.Create(employeeAssets, pageNumber ?? 1, pageSize);
+
+            return new EmployeeViewModel
+            {
+                Employee = employee.ToEmployeeDto(),
+                FixedAssets = paginatedAssets
+            };
+        }
+
+        public async Task<IActionResult> Details(int id, int? pageNumber)
+        {
+            var viewModel = await GetEmployeeViewModelAsync(id, pageNumber);
+
+            if(viewModel == null)
             {
                 return NotFound();
             }
 
             ViewBag.WorkplaceList = EnumHelper.GetSelectListItems<Workplace>();
 
-            return View(employee.ToEmployeeDto());
+            return View(viewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEmployeePartialView(int id)
+        public async Task<IActionResult> GetEmployeePartialView(int id, int? pageNumber)
         {
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
+            var viewModel = await GetEmployeeViewModelAsync(id, pageNumber);
 
-            return PartialView("_EmployeePartialView", employee.ToEmployeeDto());
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("_EmployeePartialView", viewModel);
         }
 
         [HttpGet]
