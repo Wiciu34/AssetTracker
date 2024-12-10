@@ -1,4 +1,6 @@
-﻿using AssetTracker.Interfaces;
+﻿using AssetTracker.DTOs.Dashboard;
+using AssetTracker.Interfaces;
+using AssetTracker.Mappers;
 using AssetTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +12,22 @@ public class DashboardController : Controller
     public DashboardController(IDashboardRepository repository)
     {
         _repository = repository;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var assetsHistories = await _repository.GetNewlyGrantedAssets();
+
+        var grantedAssets = assetsHistories.Select(a => a.ToGrantedAssetDto()).ToList();
+
+        var counts = new Dashboard
+        {
+            EmployeesCount = await _repository.GetEmployyeCountAsync(),
+            AssetsCount = await _repository.GetAssetCountAsync(),
+            NewlyGrantedAssets = grantedAssets
+        };
+
+        return View(counts);
     }
 
     [HttpGet]
