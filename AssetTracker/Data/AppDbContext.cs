@@ -22,6 +22,10 @@ public class AppDbContext : DbContext
             .WithOne(e => e.Employee)
             .OnDelete(DeleteBehavior.SetNull);
 
+        modelBuilder.Entity<Employee>()
+            .HasIndex(e => e.Email)
+            .IsUnique();
+
         modelBuilder.Entity<FixedAsset>()
             .HasIndex(fa => fa.SerialNumber)
             .IsUnique();
