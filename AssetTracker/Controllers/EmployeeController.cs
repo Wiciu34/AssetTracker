@@ -7,6 +7,7 @@ using AssetTracker.Mappers;
 using AssetTracker.Models;
 using AssetTracker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetTracker.Controllers
 {
@@ -94,10 +95,20 @@ namespace AssetTracker.Controllers
         {
             if(ModelState.IsValid)
             {
-                var employee = employeeDto.ToEmployeeFromCreateUpdateDto();
-                await _employeeRepository.CreateEmployeeAsync(employee);
-
-                return Json(new { success = true});
+                try
+                {
+                    var employee = employeeDto.ToEmployeeFromCreateUpdateDto();
+                    await _employeeRepository.CreateEmployeeAsync(employee);
+                    return Json(new { success = true });
+                }
+                catch(DbUpdateException ex)
+                {
+                    if(ex.InnerException?.Message.Contains("IX_Employees_Email") == true)
+                    {
+                        ModelState.AddModelError("employeeDto.Email", "Email jest już zajęty");
+                    }
+                }
+               
             }
 
             var errors = ModelState.ToDictionary(
@@ -113,8 +124,19 @@ namespace AssetTracker.Controllers
         {
             if(ModelState.IsValid)
             {
-                await _employeeRepository.UpdateEmployeeAsync(employeeDto, employeeId);
-                return Json(new { success = true});
+                try
+                {
+                    await _employeeRepository.UpdateEmployeeAsync(employeeDto, employeeId);
+                    return Json(new { success = true });
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException?.Message.Contains("IX_Employees_Email") == true)
+                    {
+                        ModelState.AddModelError("employeeDto.Email", "Email jest już zajęty");
+                    }
+                }
+
             }
 
             var errors = ModelState.ToDictionary(
